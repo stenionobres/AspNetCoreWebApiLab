@@ -9,3 +9,13 @@ In this application, several real usage scenarios were tested based on a mini ap
 After the case studies, the main conclusions were documented in this file and serve as a reference for use and source of consultation.
 
 ## Table of contents
+
+* [Prerequisites](#prerequisites)
+
+## Prerequisites
+
+What needs to be installed on the machine to extend and debug the project:
+
+    Visual Studio Community 2019;
+    Net Core SDK 3.1;
+    SQL Server
