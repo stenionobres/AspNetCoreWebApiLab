@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +20,13 @@ namespace AspNetCoreWebApiLab.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddApiVersioning(versioningOptions => 
+            {
+                versioningOptions.AssumeDefaultVersionWhenUnspecified = true;
+                versioningOptions.ReportApiVersions = true;
+                versioningOptions.DefaultApiVersion = new ApiVersion(1, 0);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
