@@ -22,6 +22,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [Resources](#resources)
     * [HTTP Verbs](#http-verbs)
     * [Hypermedia (HATEOAS)](#hypermedia-(HATEOAS))
+* [Versioning](#versioning)
 
 ## Prerequisites
 
@@ -132,3 +133,62 @@ Content-Length: ...
     }
 }
 ```
+
+## Versioning
+
+One of the most important things in API design is versioning. The business rules changes and the api users shouldn't identify issues.
+
+The main types of versioning in API design are: query parameters, custom header and URI path.
+
+With ASP.NET Core Web API is possible to version the controller or controller actions. For this is used the `ApiVersion`, `MapToApiVersion` attributes and the [Microsoft.AspNetCore.Mvc.Versioning](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Versioning) package should be added on solution.
+
+To enables versioning with the Microsoft package the code below should be added on [Startup](./AspNetCoreWebApiLab.Api/Startup.cs) class in the API project.
+
+``` C#
+services.AddApiVersioning();
+```
+
+The controllers [VersioningController](./AspNetCoreWebApiLab.Api/Controllers/Experiments/VersioningController.cs) and [Versioning20Controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/Versioning20Controller.cs) showns examples of a API that has three versions: 1.0, 1.1 and 2.0.
+
+The versions 1.0 and 1.1 are in the same controller, however the version 2.0 is in the other controller. The api versioning type can be defined on startup configuration using the `ApiVersionReader` option like the examples below:
+
+* Query parameters
+
+``` C#
+services.AddApiVersioning(versioningOptions => 
+{
+    versioningOptions.ApiVersionReader = new QueryStringApiVersionReader();
+});
+```
+
+* Custom header
+
+``` C#
+services.AddApiVersioning(versioningOptions => 
+{
+    versioningOptions.ApiVersionReader = new HeaderApiVersionReader("X-Version");
+});
+```
+
+* URI path
+
+The parameter `{version:apiVersion}` must be inserted into the controller route. 
+
+``` C#
+services.AddApiVersioning(versioningOptions => 
+{
+    versioningOptions.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+```
+
+To use many configurations the `Combine` method must be used for merge two or more configurations:
+
+``` C#
+services.AddApiVersioning(versioningOptions => 
+{
+    versioningOptions.ApiVersionReader = ApiVersionReader.Combine(new QueryStringApiVersionReader(),
+                                                                  new HeaderApiVersionReader("X-Version"),new UrlSegmentApiVersionReader());
+});
+```
+
+The controllers [VersioningController](./AspNetCoreWebApiLab.Api/Controllers/Experiments/VersioningController.cs) and [Versioning20Controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/Versioning20Controller.cs) use all three types of versioning: query parameters, custom header and URI path. For more details the [Startup](./AspNetCoreWebApiLab.Api/Startup.cs) class can be consulted.
