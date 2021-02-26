@@ -1,8 +1,10 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace AspNetCoreWebApiLab.Api.Models.Experiments
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ResourceModel
     {
         [Required]

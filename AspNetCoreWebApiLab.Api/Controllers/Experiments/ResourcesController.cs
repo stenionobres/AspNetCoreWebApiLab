@@ -7,6 +7,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.Experiments
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ResourcesController : ControllerBase
     {
         private dynamic _resource = new { Id = 1, Description = "First resource" };

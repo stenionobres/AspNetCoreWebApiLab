@@ -6,6 +6,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.Experiments
     [ApiController]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class VersioningController : ControllerBase
     {
         [HttpGet]
