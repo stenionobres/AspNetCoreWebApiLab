@@ -53,6 +53,8 @@ The solution `AspNetCoreWebApiLab` is divided into three projects: `AspNetCoreWe
 
 >[Microsoft.AspNetCore.Mvc.Versioning 4.2.0](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Versioning/4.2.0)
 
+>[Swashbuckle.AspNetCore 5.6.3](https://www.nuget.org/packages/Swashbuckle.AspNetCore/5.6.3)
+
 ### AspNetCoreWebApiLab-Api
 
 ### AspNetCoreWebApiLab-ApiClient
