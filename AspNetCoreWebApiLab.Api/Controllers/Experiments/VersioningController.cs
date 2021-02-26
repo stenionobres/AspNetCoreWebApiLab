@@ -16,7 +16,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.Experiments
 
         [HttpGet]
         [MapToApiVersion("1.1")]
-        public ActionResult GetVersioning20()
+        public ActionResult GetVersioning11()
         {
             return Ok("Version 1.1");
         }
