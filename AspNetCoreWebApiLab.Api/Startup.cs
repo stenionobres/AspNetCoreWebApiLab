@@ -22,15 +22,7 @@ namespace AspNetCoreWebApiLab.Api
         {
             services.AddControllers();
 
-            services.AddApiVersioning(versioningOptions => 
-            {
-                versioningOptions.AssumeDefaultVersionWhenUnspecified = true;
-                versioningOptions.ReportApiVersions = true;
-                versioningOptions.DefaultApiVersion = new ApiVersion(1, 0);
-                versioningOptions.ApiVersionReader = ApiVersionReader.Combine(new QueryStringApiVersionReader(), 
-                                                                              new HeaderApiVersionReader("X-Version"),
-                                                                              new UrlSegmentApiVersionReader());
-            });
+            services.AddApiVersioning(versioningOptions => GetApiVersioningOptions(versioningOptions));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +43,16 @@ namespace AspNetCoreWebApiLab.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void GetApiVersioningOptions(ApiVersioningOptions apiVersioningOptions)
+        {
+            apiVersioningOptions.AssumeDefaultVersionWhenUnspecified = true;
+            apiVersioningOptions.ReportApiVersions = true;
+            apiVersioningOptions.DefaultApiVersion = new ApiVersion(1, 0);
+            apiVersioningOptions.ApiVersionReader = ApiVersionReader.Combine(new QueryStringApiVersionReader(),
+                                                                             new HeaderApiVersionReader("X-Version"),
+                                                                             new UrlSegmentApiVersionReader());
         }
     }
 }
