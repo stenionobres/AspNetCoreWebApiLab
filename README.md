@@ -17,6 +17,11 @@ After the case studies, the main conclusions were documented in this file and se
     * [AspNetCoreWebApiLab-Api](#AspNetCoreWebApiLab-Api)
     * [AspNetCoreWebApiLab-ApiClient](#AspNetCoreWebApiLab-ApiClient)
     * [AspNetCoreWebApiLab-Persistence](#AspNetCoreWebApiLab-Persistence)
+* [Rest X Restful](#rest-x-restful)
+    * [Maturity Model](#maturity-model)
+    * [Resources](#resources)
+    * [HTTP Verbs](#http-verbs)
+    * [Hypermedia (HATEOAS)](#hypermedia-(HATEOAS))
 
 ## Prerequisites
 
@@ -52,3 +57,78 @@ The solution `AspNetCoreWebApiLab` is divided into three projects: `AspNetCoreWe
 ### AspNetCoreWebApiLab-ApiClient
 
 ### AspNetCoreWebApiLab-Persistence
+
+## Rest X Restful
+
+Representational state transfer (REST) is a standard defined by Roy Fielding for a software architecture of interactive applications that use Web services. A Web service that follows this standard is called RESTful. [Wikipedia]
+
+### Maturity Model
+
+A [model](https://martinfowler.com/articles/richardsonMaturityModel.html) developed by Leonard Richardson that breaks down the principal elements of a REST approach into three steps: resources, http verbs, and hypermedia controls.
+
+### Resources
+
+Usually, a resource is something that can be stored on a computer and represented as a stream of bits: a document, a row in a database, or the result of running an algorithm. 
+
+So now rather than making all our requests to a singular service endpoint, we now start talking to individual resources. Examples of resources: customers, companies, clients and users. Many APIs design guides recommends **the use of nouns in plural** to name resources instead verbs.
+
+### HTTP Verbs
+
+Separate URIs are given for separate resources, while incorporating different HTTP verbs according to the CRUD usage of those resources. The mainly HTTP verbs are: POST, GET, PUT, PATCH and DELETE
+
+| HTTP Verb | Action on resource |
+|:---------:|:------------------:|
+| POST      | Create             |
+| GET       | Read               |
+| PUT       | Update             |
+| PATCH     | Partial Update     |
+| DELETE    | Delete             |
+
+The mainly response status codes are listed below. These status codes represents the behavior that occurred on the server.
+
+| Code | Description    | 
+|:----:|:---------------|
+| 200  | OK             |
+| 201  | Created        |
+| 400  | Bad Request    |
+| 401  | Not Authorized |
+| 403  | Forbidden      |
+| 404  | Not Found      |
+| 500  | Internal Error |
+
+For a good use of HTTP verbs with correct status codes the table below was made. It's very important to make the correct use of verbs and codes to correctly use the REST standard.
+
+| HTTP Verb | Related status codes         |
+|:---------:|:-----------------------------|
+| POST      | 201, 400, 401, 403, 500      |
+| GET       | 200, 400, 401, 403, 404, 500 |
+| PUT       | 200, 400, 401, 403, 404, 500 |
+| PATCH     | 200, 400, 401, 403, 404, 500 |
+| DELETE    | 200, 400, 401, 403, 404, 500 |
+
+This [controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/ResourceController.cs) presents how to implements a basic resource that uses the main HTTP verbs with correct response status codes. 
+
+### Hypermedia (HATEOAS)
+
+HATEOAS (Hypermedia as the Engine of Application State) is a constraint of the REST application architecture. The term “hypermedia” refers to any content that contains links to other forms of media such as images, movies, and text.
+
+REST architectural style lets us use the hypermedia links in the response contents. It allows the client can dynamically navigate to the appropriate resources by traversing the hypermedia links. Below is shown an example:
+
+``` JSON
+HTTP/1.1 200 OK
+Content-Type: application/vnd.acme.account+json
+Content-Length: ...
+
+{
+    "account": {
+        "account_number": 12345,
+        "balance": {
+            "currency": "usd",
+            "value": -25.00
+        },
+        "links": {
+            "deposit": "/accounts/12345/deposit"
+        }
+    }
+}
+```
