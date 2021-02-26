@@ -107,7 +107,7 @@ For a good use of HTTP verbs with correct status codes the table below was made.
 | PATCH     | 200, 400, 401, 403, 404, 500 |
 | DELETE    | 200, 400, 401, 403, 404, 500 |
 
-This [controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/ResourceController.cs) presents how to implements a basic resource that uses the main HTTP verbs with correct response status codes. 
+This [controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/ResourcesController.cs) presents how to implements a basic resource that uses the main HTTP verbs with correct response status codes. 
 
 ### Hypermedia (HATEOAS)
 
