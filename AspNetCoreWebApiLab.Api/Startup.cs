@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace AspNetCoreWebApiLab.Api
 {
@@ -23,6 +24,16 @@ namespace AspNetCoreWebApiLab.Api
             services.AddControllers();
 
             services.AddApiVersioning(versioningOptions => GetApiVersioningOptions(versioningOptions));
+
+            services.AddSwaggerGen(swaggerOptions => 
+            {
+                swaggerOptions.SwaggerDoc("IdentityAPI", 
+                                          new OpenApiInfo() 
+                                          { 
+                                            Title = "ASP.NET Core Identity API",
+                                            Version = "1.0"
+                                          });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +45,8 @@ namespace AspNetCoreWebApiLab.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
 
             app.UseRouting();
 
