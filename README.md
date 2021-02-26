@@ -97,7 +97,7 @@ The mainly response status codes are listed below. These status codes represents
 | 404  | Not Found      |
 | 500  | Internal Error |
 
-For a good use of HTTP verbs with correct status codes the table below was made. It's very important to make the correct use of verbs and codes to correctly use the REST standard.
+For a good use of HTTP verbs with correct status codes the table below has been made. It's very important to make the correct use of verbs and codes to correctly use the REST standard.
 
 | HTTP Verb | Related status codes         |
 |:---------:|:-----------------------------|
@@ -138,7 +138,7 @@ Content-Length: ...
 
 One of the most important things in API design is versioning. The business rules changes and the api users shouldn't identify issues.
 
-The main types of versioning in API design are: query parameters, custom header and URI path.
+The **main types of versioning** in API design are: **query parameters, custom header and URI path**.
 
 With ASP.NET Core Web API is possible to version the controller or controller actions. For this is used the `ApiVersion`, `MapToApiVersion` attributes and the [Microsoft.AspNetCore.Mvc.Versioning](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Versioning) package should be added on solution.
 
@@ -148,7 +148,7 @@ To enables versioning with the Microsoft package the code below should be added 
 services.AddApiVersioning();
 ```
 
-The controllers [VersioningController](./AspNetCoreWebApiLab.Api/Controllers/Experiments/VersioningController.cs) and [Versioning20Controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/Versioning20Controller.cs) showns examples of a API that has three versions: 1.0, 1.1 and 2.0.
+The controllers [VersioningController](./AspNetCoreWebApiLab.Api/Controllers/Experiments/VersioningController.cs) and [Versioning20Controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/Versioning20Controller.cs) showns examples of **a API that has three versions: 1.0, 1.1 and 2.0**.
 
 The versions 1.0 and 1.1 are in the same controller, however the version 2.0 is in the other controller. The api versioning type can be defined on startup configuration using the `ApiVersionReader` option like the examples below:
 
@@ -187,7 +187,8 @@ To use many configurations the `Combine` method must be used for merge two or mo
 services.AddApiVersioning(versioningOptions => 
 {
     versioningOptions.ApiVersionReader = ApiVersionReader.Combine(new QueryStringApiVersionReader(),
-                                                                  new HeaderApiVersionReader("X-Version"),new UrlSegmentApiVersionReader());
+                                                                  new HeaderApiVersionReader("X-Version"),
+                                                                  new UrlSegmentApiVersionReader());
 });
 ```
 
