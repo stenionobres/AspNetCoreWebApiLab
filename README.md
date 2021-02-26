@@ -21,7 +21,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [Maturity Model](#maturity-model)
     * [Resources](#resources)
     * [HTTP Verbs](#http-verbs)
-    * [Hypermedia (HATEOAS)](#hypermedia-(HATEOAS))
+    * [Hypermedia (HATEOAS)](#hypermedia-HATEOAS)
 * [Versioning](#versioning)
 
 ## Prerequisites
