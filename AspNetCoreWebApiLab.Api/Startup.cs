@@ -27,12 +27,7 @@ namespace AspNetCoreWebApiLab.Api
 
             services.AddSwaggerGen(swaggerOptions => 
             {
-                swaggerOptions.SwaggerDoc("IdentityAPI", 
-                                          new OpenApiInfo() 
-                                          { 
-                                            Title = "ASP.NET Core Identity API",
-                                            Version = "1.0"
-                                          });
+                swaggerOptions.SwaggerDoc("IdentityAPI", GetApiInfo());
             });
         }
 
@@ -72,6 +67,26 @@ namespace AspNetCoreWebApiLab.Api
             apiVersioningOptions.ApiVersionReader = ApiVersionReader.Combine(new QueryStringApiVersionReader(),
                                                                              new HeaderApiVersionReader("X-Version"),
                                                                              new UrlSegmentApiVersionReader());
+        }
+
+        private OpenApiInfo GetApiInfo()
+        {
+            return new OpenApiInfo()
+            {
+                Title = "ASP.NET Core Identity API",
+                Version = "1.0",
+                Description = "Through this API you can access ASP.NET Core Identity services",
+                Contact = new OpenApiContact()
+                {
+                    Name = "Stenio Nobres",
+                    Url = new System.Uri("https://www.linkedin.com/in/stenionobres/")
+                },
+                License = new OpenApiLicense()
+                {
+                    Name = "MIT License",
+                    Url = new System.Uri("https://opensource.org/licenses/MIT")
+                }
+            };
         }
     }
 }
