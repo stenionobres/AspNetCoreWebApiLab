@@ -8,6 +8,6 @@ namespace AspNetCoreWebApiLab.Api.Models.V1
         
         [Required]
         [StringLength(50)]
-        public int Description { get; set; }
+        public string Description { get; set; }
     }
 }
