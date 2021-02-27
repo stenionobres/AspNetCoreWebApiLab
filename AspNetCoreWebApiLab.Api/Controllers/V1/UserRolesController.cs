@@ -64,5 +64,24 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
             }
         }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult DeleteUserRoles(int id, int roleId)
+        {
+            try
+            {
+                if (id != 1) return NotFound("User not found");
+
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
     }
 }
