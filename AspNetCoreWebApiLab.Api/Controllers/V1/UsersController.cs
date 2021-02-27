@@ -6,6 +6,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
     [ApiController]
     [Route("api/users")]
+    [Consumes("application/json")]
     [Produces("application/json")]
     public class UsersController : ControllerBase
     {
@@ -21,6 +22,22 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 if (userId != 1) return NotFound("User not found");
 
                 return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult PostUsers(UserModel user)
+        {
+            try
+            {
+                return Created($"/api/users/{user.Id}", user);
             }
             catch (System.Exception)
             {
