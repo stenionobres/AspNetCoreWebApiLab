@@ -16,7 +16,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult GetRoles(int id)
+        public ActionResult GetUserRoles(int id)
         {
             try
             {
