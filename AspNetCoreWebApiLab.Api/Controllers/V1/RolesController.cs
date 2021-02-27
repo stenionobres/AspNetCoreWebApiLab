@@ -28,5 +28,21 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
             }
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult PostRoles(RoleModel role)
+        {
+            try
+            {
+                return Created($"/api/roles/{role.Id}", role);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
     }
 }
