@@ -48,6 +48,12 @@ namespace AspNetCoreWebApiLab.Api
 
             app.UseSwagger();
 
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/IdentityAPI/swagger.json", "ASP.NET Core Identity API");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
