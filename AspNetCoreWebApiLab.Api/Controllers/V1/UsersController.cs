@@ -88,11 +88,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteUsers(UserModel user)
+        public ActionResult DeleteUsers(int userId)
         {
             try
             {
-                if (user.Id != 1) return NotFound("User not found");
+                if (userId != 1) return NotFound("User not found");
 
                 return Ok();
             }
