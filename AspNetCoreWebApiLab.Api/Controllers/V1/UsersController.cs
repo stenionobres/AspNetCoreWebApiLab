@@ -10,7 +10,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     public class UsersController : ControllerBase
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -2,7 +2,7 @@
 
 namespace AspNetCoreWebApiLab.Api.Models.V1
 {
-    public class User
+    public class UserModel
     {
         public int Id { get; set; }
 
