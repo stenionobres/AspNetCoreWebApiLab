@@ -44,5 +44,24 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
             }
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult PutRoles(RoleModel role)
+        {
+            try
+            {
+                if (role.Id != 1) return NotFound("Role not found");
+
+                return Ok(role);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
     }
 }
