@@ -10,7 +10,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     [Produces("application/json")]
     public class RolesController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("{roleId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
