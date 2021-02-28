@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreWebApiLab.Api.Models.V1;
+using System.Collections.Generic;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
@@ -153,6 +154,26 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 if (userId != 1) return NotFound("User not found");
 
                 return Created($"/api/users/{userId}/roles", role);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        [HttpGet]
+        [Route("{userId}/roles")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RoleModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult GetUserRoles(int userId)
+        {
+            try
+            {
+                if (userId != 1) return NotFound("User not found");
+
+                return Ok();
             }
             catch (System.Exception)
             {

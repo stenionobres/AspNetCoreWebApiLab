@@ -11,25 +11,6 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     [Produces("application/json")]
     public class UserRolesController : ControllerBase
     {
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RoleModel>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult GetUserRoles(int id)
-        {
-            try
-            {
-                if (id != 1) return NotFound("User not found");
-
-                return Ok();
-            }
-            catch (System.Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
-            }
-        }
-
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
