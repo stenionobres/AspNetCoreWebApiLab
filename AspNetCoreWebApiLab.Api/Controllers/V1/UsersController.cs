@@ -140,5 +140,25 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        [HttpPost]
+        [Route("{userId}/roles")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult PostUserRoles(int userId, RoleModel role)
+        {
+            try
+            {
+                if (userId != 1) return NotFound("User not found");
+
+                return Created($"/api/users/{userId}/roles", role);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
     }
 }

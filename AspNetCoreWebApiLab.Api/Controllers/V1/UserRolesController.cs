@@ -30,22 +30,6 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PostUserRoles(int id, RoleModel role)
-        {
-            try
-            {
-                return Created($"/api/users/{id}/roles", role);
-            }
-            catch (System.Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
-            }
-        }
-
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
