@@ -121,5 +121,24 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        [HttpDelete("{username}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult DeleteUsers(string username)
+        {
+            try
+            {
+                if (username != "example@example.com") return NotFound("User not found");
+
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
     }
 }
