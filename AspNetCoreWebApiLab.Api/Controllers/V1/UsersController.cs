@@ -10,7 +10,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     [Produces("application/json")]
     public class UsersController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
