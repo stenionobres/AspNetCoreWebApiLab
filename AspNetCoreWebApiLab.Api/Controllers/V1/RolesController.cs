@@ -83,7 +83,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{roleId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
