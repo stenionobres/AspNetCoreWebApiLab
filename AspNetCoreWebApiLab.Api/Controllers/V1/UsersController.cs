@@ -29,6 +29,25 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        [HttpGet("{username}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult GetUsers(string username)
+        {
+            try
+            {
+                if (username != "example@example.com") return NotFound("User not found");
+
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -101,5 +120,6 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
             }
         }
+
     }
 }
