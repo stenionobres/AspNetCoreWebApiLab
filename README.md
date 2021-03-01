@@ -23,6 +23,10 @@ After the case studies, the main conclusions were documented in this file and se
     * [HTTP Verbs](#http-verbs)
     * [Hypermedia (HATEOAS)](#hypermedia-HATEOAS)
 * [Versioning](#versioning)
+* [ASP.NET Core Identity API](#asp.net-core-identity-api)
+    * [API First](#api-first)
+    * [OpenAPI Specification](#openAPI-specification)
+    * [ApiExplorer](#apiexplorer)
 
 ## Prerequisites
 
@@ -195,3 +199,75 @@ services.AddApiVersioning(versioningOptions =>
 ```
 
 The controllers [VersioningController](./AspNetCoreWebApiLab.Api/Controllers/Experiments/VersioningController.cs) and [Versioning20Controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/Versioning20Controller.cs) use all three types of versioning: query parameters, custom header and URI path. For more details the [Startup](./AspNetCoreWebApiLab.Api/Startup.cs) class can be consulted.
+
+## ASP.NET Core Identity API
+
+To exemplify the use of ASP.NET Core Web API some services of ASP.NET Core Identity have been used through API, more specifically the Users, Roles and Claims services.
+
+The image below exemplifies the relationship and dependency between the Users, Roles and Claims entities:
+
+![image info](./readme-pictures/identity-conceitual.png)
+
+* A User can have one or more Roles associated;
+* A User can have one or more Claims associated;
+* A Role can have one or more Claims associated;
+
+More details about the purpose of Roles and Claims in ASP.NET Core Identity are shown [here](https://github.com/stenionobres/AspNetCoreIdentityLab#claims).
+
+### API First
+
+An API-first approach means that for any given development project, your APIs will be developed in the first place. An API-first approach involves developing APIs that are consistent and reusable, which can be accomplished by using an API description language to establish a contract for how the API is supposed to behave.
+
+Establishing a contract involves spending more time thinking about the design of an API. It also often involves additional planning and collaboration with the stakeholders providing feedback on the design of an API before any code is written.
+
+The Benefits of an API-First Approach are:
+
+* Development teams can work in parallel;
+* Reduces the cost of developing apps;
+* Increases the speed to market;
+* Ensures good developer experiences;
+* Reduces the risk of failure;
+
+More details on this technique can be found [here](https://swagger.io/resources/articles/adopting-an-api-first-approach/).
+
+### OpenAPI Specification
+
+The OpenAPI Specification, originally known as the Swagger Specification, is a specification for machine-readable interface files for describing, producing, consuming, and visualizing RESTful web services.
+
+OpenAPI Specification is in version 3.0 and for generate this specification the package [Swashbuckle.AspNetCore](https://www.nuget.org/packages/Swashbuckle.AspNetCore) was added on the project.
+
+The configuration of Swashbuckle.AspNetCore is defined on [Startup](./AspNetCoreWebApiLab.Api/Startup.cs) class.
+
+### ApiExplorer
+
+ApiExplorer is an abstraction on top of ASP.NET Core MVC that exposes metadata about that application. Swashbuckle.AspNetCore uses the metadata ApiExplorer exposes to generate an OpenApi specification. This specification is generate on `swagger.json` file.
+
+Consumers of the API have to know what types of responses they can expect so they can act accordingly. Thinking on that the use of attributes `Consumes`, `Produces` and `ProducesResponseType` should be used to improve the specification generated.
+
+``` C#
+[ApiController]
+[Route("api/users")]
+[Consumes("application/json")]
+[Produces("application/json")]
+public class UsersController : ControllerBase
+{
+    [HttpGet("{userId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public ActionResult GetUsers(int userId)
+    {
+        try
+        {
+            return Ok();
+        }
+        catch (System.Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+        }
+    }
+
+}
+```
+
