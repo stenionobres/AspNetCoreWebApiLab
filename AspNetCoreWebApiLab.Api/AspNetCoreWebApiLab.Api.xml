@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AspNetCoreWebApiLab.Api</name>
+    </assembly>
+    <members>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.PostUserRoles(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.RoleModel)">
+            <summary>
+            Associates an user with a role. 
+            </summary>
+            <param name="userId"></param>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.GetUserRoles(System.Int32)">
+            <summary>
+            Get roles associated with user.
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.DeleteUserRoles(System.Int32,System.Int32)">
+            <summary>
+            Removes role associated with user.
+            </summary>
+            <param name="userId"></param>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

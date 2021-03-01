@@ -141,6 +141,12 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        /// <summary>
+        /// Associates an user with a role. 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("{userId}/roles")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
@@ -161,6 +167,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        /// <summary>
+        /// Get roles associated with user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{userId}/roles")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RoleModel>))]
@@ -181,6 +192,12 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        /// <summary>
+        /// Removes role associated with user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{userId}/roles/{roleId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

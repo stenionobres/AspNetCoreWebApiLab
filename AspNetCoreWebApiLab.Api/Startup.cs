@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace AspNetCoreWebApiLab.Api
 {
@@ -28,6 +31,11 @@ namespace AspNetCoreWebApiLab.Api
             services.AddSwaggerGen(swaggerOptions => 
             {
                 swaggerOptions.SwaggerDoc("IdentityAPI", GetApiInfo());
+
+                var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+                
+                swaggerOptions.IncludeXmlComments(xmlCommentsFullPath);
             });
         }
 
