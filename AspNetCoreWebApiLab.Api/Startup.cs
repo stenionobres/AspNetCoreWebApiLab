@@ -87,12 +87,12 @@ namespace AspNetCoreWebApiLab.Api
                 Contact = new OpenApiContact()
                 {
                     Name = "Stenio Nobres",
-                    Url = new System.Uri("https://www.linkedin.com/in/stenionobres/")
+                    Url = new Uri("https://www.linkedin.com/in/stenionobres/")
                 },
                 License = new OpenApiLicense()
                 {
                     Name = "MIT License",
-                    Url = new System.Uri("https://opensource.org/licenses/MIT")
+                    Url = new Uri("https://opensource.org/licenses/MIT")
                 }
             };
         }
