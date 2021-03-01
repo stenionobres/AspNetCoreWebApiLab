@@ -23,7 +23,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [HTTP Verbs](#http-verbs)
     * [Hypermedia (HATEOAS)](#hypermedia-HATEOAS)
 * [Versioning](#versioning)
-* [ASP.NET Core Identity API](#asp.net-core-identity-api)
+* [ASP.NET Core Identity API](#aspnet-core-identity-api)
     * [API First](#api-first)
     * [OpenAPI Specification](#openAPI-specification)
     * [ApiExplorer](#apiexplorer)
@@ -216,7 +216,7 @@ More details about the purpose of Roles and Claims in ASP.NET Core Identity are 
 
 ### API First
 
-An API-first approach means that for any given development project, your APIs will be developed in the first place. An API-first approach involves developing APIs that are consistent and reusable, which can be accomplished by using an API description language to establish a contract for how the API is supposed to behave.
+An [API-first](https://swagger.io/resources/articles/adopting-an-api-first-approach/) approach means that for any given development project, your APIs will be developed in the first place. An API-first approach involves developing APIs that are consistent and reusable, which can be accomplished by using an API description language to establish a contract for how the API is supposed to behave.
 
 Establishing a contract involves spending more time thinking about the design of an API. It also often involves additional planning and collaboration with the stakeholders providing feedback on the design of an API before any code is written.
 
@@ -227,8 +227,6 @@ The Benefits of an API-First Approach are:
 * Increases the speed to market;
 * Ensures good developer experiences;
 * Reduces the risk of failure;
-
-More details on this technique can be found [here](https://swagger.io/resources/articles/adopting-an-api-first-approach/).
 
 ### OpenAPI Specification
 
@@ -242,7 +240,7 @@ The configuration of Swashbuckle.AspNetCore is defined on [Startup](./AspNetCore
 
 ApiExplorer is an abstraction on top of ASP.NET Core MVC that exposes metadata about that application. Swashbuckle.AspNetCore uses the metadata ApiExplorer exposes to generate an OpenApi specification. This specification is generate on `swagger.json` file.
 
-Consumers of the API have to know what types of responses they can expect so they can act accordingly. Thinking on that the use of attributes `Consumes`, `Produces` and `ProducesResponseType` should be used to improve the specification generated.
+Consumers of the API have to know what types of responses they can expect so they can act accordingly. Thinking on that the attributes `Consumes`, `Produces` and `ProducesResponseType` should be used to improve the specification generated.
 
 ``` C#
 [ApiController]
