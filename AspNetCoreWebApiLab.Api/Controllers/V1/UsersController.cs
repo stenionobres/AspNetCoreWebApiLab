@@ -218,5 +218,13 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        [HttpOptions]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult OptionsUsers()
+        {
+            Response.Headers.Add("Allow", "GET,POST,PUT,PATCH,DELETE");
+            return Ok();
+        }
+
     }
 }
