@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
 using System.Reflection;
@@ -24,7 +25,11 @@ namespace AspNetCoreWebApiLab.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(newtonSoftOptions =>
+                    {
+                        newtonSoftOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    });
 
             services.AddApiVersioning(versioningOptions => GetApiVersioningOptions(versioningOptions));
 

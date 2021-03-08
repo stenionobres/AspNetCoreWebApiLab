@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreWebApiLab.Api.Models.V1;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
@@ -84,18 +85,20 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
-        [HttpPatch]
+        [HttpPatch("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PatchUsers(UserModel user)
+        public ActionResult PatchUsers(int userId, JsonPatchDocument<UserModel> userModelPatchDocument)
         {
             try
             {
-                if (user.Id != 1) return NotFound("User not found");
+                var userModel = new UserModel();
 
-                return Ok(user);
+                userModelPatchDocument.ApplyTo(userModel);
+
+                return Ok(userModel);
             }
             catch (System.Exception)
             {
