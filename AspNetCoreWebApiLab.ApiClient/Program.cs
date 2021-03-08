@@ -1,5 +1,5 @@
-﻿using RestSharp;
-using System;
+﻿using System;
+using AspNetCoreWebApiLab.ApiClient.Services;
 
 namespace AspNetCoreWebApiLab.ApiClient
 {
@@ -7,12 +7,16 @@ namespace AspNetCoreWebApiLab.ApiClient
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
-            var client = new RestClient("https://localhost:44325/api/");
-            var request = new RestRequest("roles/7", Method.GET);
-
-            var response = client.Execute(request);
+            try
+            {
+                var baseUrl = "https://localhost:44325/api/";
+                var rolesService = new RolesService(baseUrl);
+                var role = rolesService.GetRole(1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
