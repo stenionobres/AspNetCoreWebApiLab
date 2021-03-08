@@ -82,5 +82,13 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
             }
         }
+
+        [HttpOptions]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult OptionsRoles()
+        {
+            Response.Headers.Add("Allow", "GET,POST,PUT,DELETE");
+            return Ok();
+        }
     }
 }
