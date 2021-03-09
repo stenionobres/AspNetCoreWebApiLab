@@ -55,5 +55,18 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
 
             throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
         }
+
+        public bool DeleteRole(int id)
+        {
+            var request = new RestRequest($"{ResourceName}/{id}", Method.DELETE);
+            var response = _restClient.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                return true;
+            }
+
+            throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
+        }
     }
 }
