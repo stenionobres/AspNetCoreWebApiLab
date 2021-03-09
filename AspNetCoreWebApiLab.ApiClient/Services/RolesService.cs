@@ -27,5 +27,19 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
 
             throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
         }
+
+        public Role PostRole(Role role)
+        {
+            var request = new RestRequest($"{ResourceName}", Method.POST);
+            request.AddJsonBody(role);
+            var response = _restClient.Execute<Role>(request);
+
+            if (response.IsSuccessful)
+            {
+                return response.Data;
+            }
+
+            throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
+        }
     }
 }
