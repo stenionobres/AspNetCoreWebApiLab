@@ -1,5 +1,6 @@
 ﻿using System;
 using RestSharp;
+using System.Linq;
 using AspNetCoreWebApiLab.ApiClient.DTOs;
 
 namespace AspNetCoreWebApiLab.ApiClient.Services
@@ -67,6 +68,15 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
             }
 
             throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
+        }
+
+        public string OptionsRole()
+        {
+            var request = new RestRequest($"{ResourceName}", Method.OPTIONS);
+            var response = _restClient.Execute(request);
+            var allowHeader = response.Headers.FirstOrDefault(h => h.Name.Equals("Allow"));
+
+            return allowHeader.Value.ToString();
         }
     }
 }
