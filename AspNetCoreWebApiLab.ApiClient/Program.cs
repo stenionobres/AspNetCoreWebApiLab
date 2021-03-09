@@ -9,7 +9,7 @@ namespace AspNetCoreWebApiLab.ApiClient
         {
             try
             {
-                var baseUrl = "https://localhost:44325/api/";
+                var baseUrl = "https://localhost:44325/api/v1/";
                 var rolesService = new RolesService(baseUrl);
                 var role = rolesService.GetRole(1);
             }
