@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.JsonPatch;
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
     [ApiController]
-    [Route("api/users")]
+    [Route("api/v{version:apiVersion}/users")]
+    [ApiExplorerSettings(GroupName = "IdentityAPI-V1.0")]
     [Consumes("application/json")]
     [Produces("application/json")]
     public class UsersController : ControllerBase

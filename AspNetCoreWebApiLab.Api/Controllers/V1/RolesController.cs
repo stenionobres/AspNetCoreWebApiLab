@@ -5,7 +5,8 @@ using AspNetCoreWebApiLab.Api.Models.V1;
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
     [ApiController]
-    [Route("api/roles")]
+    [Route("api/v{version:apiVersion}/roles")]
+    [ApiExplorerSettings(GroupName = "IdentityAPI-V1.0")]
     [Consumes("application/json")]
     [Produces("application/json")]
     public class RolesController : ControllerBase

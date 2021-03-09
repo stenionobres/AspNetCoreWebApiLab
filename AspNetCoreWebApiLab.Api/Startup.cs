@@ -35,7 +35,7 @@ namespace AspNetCoreWebApiLab.Api
 
             services.AddSwaggerGen(swaggerOptions => 
             {
-                swaggerOptions.SwaggerDoc("IdentityAPI", GetApiInfo());
+                swaggerOptions.SwaggerDoc("IdentityAPI-V1.0", GetApiInfo(versionNumber: "1.0"));
 
                 var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
@@ -58,7 +58,7 @@ namespace AspNetCoreWebApiLab.Api
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/IdentityAPI/swagger.json", "ASP.NET Core Identity API");
+                c.SwaggerEndpoint("/swagger/IdentityAPI-V1.0/swagger.json", "ASP.NET Core Identity API 1.0");
                 c.RoutePrefix = string.Empty;
             });
 
@@ -82,12 +82,12 @@ namespace AspNetCoreWebApiLab.Api
                                                                              new UrlSegmentApiVersionReader());
         }
 
-        private OpenApiInfo GetApiInfo()
+        private OpenApiInfo GetApiInfo(string versionNumber)
         {
             return new OpenApiInfo()
             {
-                Title = "ASP.NET Core Identity API",
-                Version = "1.0",
+                Title = $"ASP.NET Core Identity API {versionNumber}",
+                Version = $"{versionNumber}",
                 Description = "Through this API you can access ASP.NET Core Identity services",
                 Contact = new OpenApiContact()
                 {
