@@ -1,6 +1,7 @@
 ﻿using System;
 using RestSharp;
 using System.Linq;
+using System.Collections.Generic;
 using AspNetCoreWebApiLab.ApiClient.DTOs;
 
 namespace AspNetCoreWebApiLab.ApiClient.Services
@@ -47,6 +48,20 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
         {
             var request = new RestRequest($"{ResourceName}", Method.PUT);
             request.AddJsonBody(user);
+            var response = _restClient.Execute<User>(request);
+
+            if (response.IsSuccessful)
+            {
+                return response.Data;
+            }
+
+            throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
+        }
+
+        public User PatchUser(int id, IEnumerable<PatchOperation> patchOperations)
+        {
+            var request = new RestRequest($"{ResourceName}/{id}", Method.PATCH);
+            request.AddJsonBody(patchOperations);
             var response = _restClient.Execute<User>(request);
 
             if (response.IsSuccessful)
