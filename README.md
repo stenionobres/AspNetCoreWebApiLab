@@ -93,25 +93,26 @@ Separate URIs are given for separate resources, while incorporating different HT
 
 The mainly response status codes are listed below. These status codes represents the behavior that occurred on the server.
 
-| Code | Description    | 
-|:----:|:---------------|
-| 200  | OK             |
-| 201  | Created        |
-| 400  | Bad Request    |
-| 401  | Not Authorized |
-| 403  | Forbidden      |
-| 404  | Not Found      |
-| 500  | Internal Error |
+| Code | Description          | 
+|:----:|:---------------------|
+| 200  | OK                   |
+| 201  | Created              |
+| 400  | Bad Request          |
+| 401  | Not Authorized       |
+| 403  | Forbidden            |
+| 404  | Not Found            |
+| 422  | Unprocessable Entity |
+| 500  | Internal Error       |
 
 For a good use of HTTP verbs with correct status codes the table below has been made. It's very important to make the correct use of verbs and codes to correctly use the REST standard.
 
-| HTTP Verb | Related status codes         |
-|:---------:|:-----------------------------|
-| POST      | 201, 400, 401, 403, 500      |
-| GET       | 200, 400, 401, 403, 404, 500 |
-| PUT       | 200, 400, 401, 403, 404, 500 |
-| PATCH     | 200, 400, 401, 403, 404, 500 |
-| DELETE    | 200, 400, 401, 403, 404, 500 |
+| HTTP Verb | Related status codes              |
+|:---------:|:----------------------------------|
+| POST      | 201, 400, 401, 403, 422, 500      |
+| GET       | 200, 400, 401, 403, 404, 500      |
+| PUT       | 200, 400, 401, 403, 404, 422, 500 |
+| PATCH     | 200, 400, 401, 403, 404, 500      |
+| DELETE    | 200, 400, 401, 403, 404, 500      |
 
 This [controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/ResourcesController.cs) presents how to implements a basic resource that uses the main HTTP verbs with correct response status codes. 
 
