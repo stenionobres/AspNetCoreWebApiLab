@@ -34,6 +34,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PostRoles(RoleModel role)
         {
@@ -51,6 +52,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PutRoles(RoleModel role)
         {

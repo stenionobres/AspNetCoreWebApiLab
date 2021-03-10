@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +32,10 @@ namespace AspNetCoreWebApiLab.Api
                     .AddNewtonsoftJson(newtonSoftOptions =>
                     {
                         newtonSoftOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    })
+                    .ConfigureApiBehaviorOptions(apiOptions => 
+                    {
+                        apiOptions.InvalidModelStateResponseFactory = context => { return CreateResponseFactory(context); };
                     });
 
             services.AddApiVersioning(versioningOptions => GetApiVersioningOptions(versioningOptions));
@@ -99,6 +106,43 @@ namespace AspNetCoreWebApiLab.Api
                     Name = "MIT License",
                     Url = new Uri("https://opensource.org/licenses/MIT")
                 }
+            };
+        }
+
+        private IActionResult CreateResponseFactory(ActionContext context)
+        {
+            // create a problem details object
+            var problemDetailsFactory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
+            var problemDetails = problemDetailsFactory.CreateValidationProblemDetails(context.HttpContext, context.ModelState);
+
+            // add additional info not added by default
+            problemDetails.Detail = "See the errors field for details";
+            problemDetails.Instance = context.HttpContext.Request.Path;
+
+            // find out which status code to use
+            var actionExecutingContext = context as ActionExecutingContext;
+
+            // if there are modelstate errors & all arguments were correctly 
+            // found/parsed we are dealing with validation errors
+            if (context.ModelState.ErrorCount > 0 && actionExecutingContext?.ActionArguments.Count == context.ActionDescriptor.Parameters.Count)
+            {
+                problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
+                problemDetails.Title = "One or more validation errors occurred.";
+
+                return new UnprocessableEntityObjectResult(problemDetails)
+                {
+                    ContentTypes = { "application/json" }
+                };
+            }
+
+            // if one the arguments was not correctly found / could not parsed
+            // we are dealing with null/unparseable input 
+            problemDetails.Status = StatusCodes.Status400BadRequest;
+            problemDetails.Title = "One or more errors on input occurred.";
+
+            return new UnprocessableEntityObjectResult(problemDetails)
+            {
+                ContentTypes = { "application/json" }
             };
         }
     }

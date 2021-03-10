@@ -36,6 +36,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PostUsers(UserModel user)
         {
@@ -53,6 +54,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PutUsers(UserModel user)
         {
@@ -119,6 +121,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PostUserRoles(int userId, RoleModel role)
         {
