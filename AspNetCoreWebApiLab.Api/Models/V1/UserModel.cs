@@ -19,7 +19,7 @@ namespace AspNetCoreWebApiLab.Api.Models.V1
         public string Occupation { get; set; }
 
         [Required]
-        [StringLength(255)]
+        [EmailAddress]
         public string Email { get; set; }
     }
 }
