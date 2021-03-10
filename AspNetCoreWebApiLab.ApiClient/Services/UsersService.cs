@@ -42,5 +42,19 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
             throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
         }
 
+        public User PutUser(User user)
+        {
+            var request = new RestRequest($"{ResourceName}", Method.PUT);
+            request.AddJsonBody(user);
+            var response = _restClient.Execute<User>(request);
+
+            if (response.IsSuccessful)
+            {
+                return response.Data;
+            }
+
+            throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
+        }
+
     }
 }
