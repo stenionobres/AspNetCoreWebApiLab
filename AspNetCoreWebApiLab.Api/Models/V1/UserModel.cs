@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AspNetCoreWebApiLab.Api.Models.V1
 {
-    public class UserModel
+    public class UserModel : IValidatableObject
     {
         public int Id { get; set; }
 
@@ -21,5 +22,15 @@ namespace AspNetCoreWebApiLab.Api.Models.V1
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var allowedDomain = "email.com";
+
+            if (Email.Contains(allowedDomain) == false)
+            {
+                yield return new ValidationResult($"The provided email must belong to the {allowedDomain} domain", new[] { "email" });
+            }
+        }
     }
 }
