@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetCoreWebApiLab.Api.Models.V1;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.JsonPatch;
+using AspNetCoreWebApiLab.Api.Services;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
@@ -14,6 +15,13 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     [ApiExplorerSettings(GroupName = "IdentityAPI-V1.0")]
     public class UsersController : ControllerBase
     {
+        private readonly UserService _userService;
+
+        public UsersController(UserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -23,9 +31,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (userId != 1) return NotFound("User not found");
+                var user = _userService.Get(userId);
 
-                return Ok();
+                if (user == null) return NotFound("User not found");
+
+                return Ok(user);
             }
             catch (System.Exception)
             {
@@ -42,6 +52,8 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
+                _userService.Save(user);
+
                 return Created($"/api/users/{user.Id}", user);
             }
             catch (System.Exception)
@@ -60,7 +72,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (user.Id != 1) return NotFound("User not found");
+                var userSaved = _userService.Get(user.Id);
+
+                if (userSaved == null) return NotFound("User not found");
+
+                _userService.Update(userSaved, user);
 
                 return Ok(user);
             }
@@ -79,11 +95,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                var userModel = new UserModel();
+                var user = _userService.Get(userId);
 
-                userModelPatchDocument.ApplyTo(userModel);
+                if (user == null) return NotFound("User not found");
 
-                return Ok(userModel);
+                userModelPatchDocument.ApplyTo(user);
+
+                _userService.Update(user);
+
+                return Ok(user);
             }
             catch (System.Exception)
             {
@@ -100,7 +120,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (userId != 1) return NotFound("User not found");
+                var user = _userService.Get(userId);
+
+                if (user == null) return NotFound("User not found");
+
+                _userService.Delete(user);
 
                 return Ok();
             }
