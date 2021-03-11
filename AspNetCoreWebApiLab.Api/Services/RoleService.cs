@@ -19,7 +19,7 @@ namespace AspNetCoreWebApiLab.Api.Services
 
         }
 
-        public void Delete(int roleId)
+        public void Delete(RoleModel role)
         {
 
         }

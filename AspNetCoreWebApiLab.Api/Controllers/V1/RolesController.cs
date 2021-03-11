@@ -93,11 +93,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                var roleSaved = _roleService.Get(roleId);
+                var role = _roleService.Get(roleId);
 
-                if (roleSaved == null) return NotFound("Role not found");
+                if (role == null) return NotFound("Role not found");
 
-                _roleService.Delete(roleId);
+                _roleService.Delete(role);
 
                 return Ok();
             }
