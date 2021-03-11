@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using AspNetCoreWebApiLab.Api.Models.V1;
+using AspNetCoreWebApiLab.Api.Services;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
@@ -12,6 +13,13 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     [ApiExplorerSettings(GroupName = "IdentityAPI-V1.0")]
     public class RolesController : ControllerBase
     {
+        private readonly RoleService _roleService;
+
+        public RolesController(RoleService roleService)
+        {
+            _roleService = roleService;
+        }
+
         [HttpGet("{roleId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -21,9 +29,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (roleId != 1) return NotFound("Role not found");
+                var role = _roleService.Get(roleId);
 
-                return Ok();
+                if (role == null) return NotFound("Role not found");
+
+                return Ok(role);
             }
             catch (System.Exception)
             {
@@ -40,6 +50,8 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
+                _roleService.Save(role);
+
                 return Created($"/api/roles/{role.Id}", role);
             }
             catch (System.Exception)
@@ -58,7 +70,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (role.Id != 1) return NotFound("Role not found");
+                var roleSaved = _roleService.Get(role.Id);
+
+                if (roleSaved == null) return NotFound("Role not found");
+
+                _roleService.Update(roleSaved, role);
 
                 return Ok(role);
             }
@@ -77,7 +93,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (roleId != 1) return NotFound("Role not found");
+                var roleSaved = _roleService.Get(roleId);
+
+                if (roleSaved == null) return NotFound("Role not found");
+
+                _roleService.Delete(roleId);
 
                 return Ok();
             }
