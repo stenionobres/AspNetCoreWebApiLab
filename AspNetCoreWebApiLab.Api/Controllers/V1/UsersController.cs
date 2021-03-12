@@ -17,11 +17,13 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     {
         private readonly UserService _userService;
         private readonly UserRoleService _userRoleService;
+        private readonly UserClaimService _userClaimService;
 
-        public UsersController(UserService userService, UserRoleService userRoleService)
+        public UsersController(UserService userService, UserRoleService userRoleService, UserClaimService userClaimService)
         {
             _userService = userService;
             _userRoleService = userRoleService;
+            _userClaimService = userClaimService;
         }
 
         [HttpGet("{userId}")]
@@ -251,6 +253,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 if (user == null) return NotFound("User not found");
 
+                _userClaimService.Associate(user, claim);
 
                 return Created($"/api/users/{userId}/claims", claim);
             }
@@ -279,7 +282,9 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 if (user == null) return NotFound("User not found");
 
-                return Ok();
+                var claims = _userClaimService.GetClaimsBy(user);
+
+                return Ok(claims);
             }
             catch (System.Exception)
             {
@@ -303,6 +308,8 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
+                _userClaimService.RemoveAssociation(userId, claimId);
+
                 return Ok();
             }
             catch (System.Exception)
