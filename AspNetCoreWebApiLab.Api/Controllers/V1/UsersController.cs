@@ -16,10 +16,12 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly UserRoleService _userRoleService;
 
-        public UsersController(UserService userService)
+        public UsersController(UserService userService, UserRoleService userRoleService)
         {
             _userService = userService;
+            _userRoleService = userRoleService;
         }
 
         [HttpGet("{userId}")]
@@ -135,7 +137,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         }
 
         /// <summary>
-        /// Associates an user with a role. 
+        /// Associates an user with a role. If role doesn't exists it's created with new id.
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="role"></param>
@@ -151,7 +153,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (userId != 1) return NotFound("User not found");
+                var user = _userService.Get(userId);
+
+                if (user == null) return NotFound("User not found");
+
+                _userRoleService.Associate(user, role);
 
                 return Created($"/api/users/{userId}/roles", role);
             }

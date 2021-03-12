@@ -6,7 +6,7 @@
     <members>
         <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.PostUserRoles(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.RoleModel)">
             <summary>
-            Associates an user with a role. 
+            Associates an user with a role. If role doesn't exists it's created with new id.
             </summary>
             <param name="userId"></param>
             <param name="role"></param>
