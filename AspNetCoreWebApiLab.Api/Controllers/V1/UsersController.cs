@@ -136,6 +136,14 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        [HttpOptions]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult OptionsUsers()
+        {
+            Response.Headers.Add("Allow", "GET,POST,PUT,PATCH,DELETE");
+            return Ok();
+        }
+
         /// <summary>
         /// Associates an user with a role. If role doesn't exists it's created with new id.
         /// </summary>
@@ -220,14 +228,6 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
             }
-        }
-
-        [HttpOptions]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult OptionsUsers()
-        {
-            Response.Headers.Add("Allow", "GET,POST,PUT,PATCH,DELETE");
-            return Ok();
         }
 
     }
