@@ -27,5 +27,10 @@ namespace AspNetCoreWebApiLab.Api.Services
         {
             return new List<RoleModel>();
         }
+
+        public void RemoveAssociation(int userId, int roleId)
+        {
+
+        }
     }
 }

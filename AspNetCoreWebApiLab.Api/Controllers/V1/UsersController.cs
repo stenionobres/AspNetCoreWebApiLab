@@ -212,7 +212,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (userId != 1) return NotFound("User not found");
+                _userRoleService.RemoveAssociation(userId, roleId);
 
                 return Ok();
             }
