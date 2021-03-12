@@ -1,4 +1,5 @@
 ﻿using AspNetCoreWebApiLab.Api.Models.V1;
+using System.Collections.Generic;
 
 namespace AspNetCoreWebApiLab.Api.Services
 {
@@ -20,6 +21,11 @@ namespace AspNetCoreWebApiLab.Api.Services
                 _roleService.Save(role);
                 roleSaved = role;
             }
+        }
+
+        public IEnumerable<RoleModel> GetRolesBy(UserModel user)
+        {
+            return new List<RoleModel>();
         }
     }
 }

@@ -182,9 +182,13 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             try
             {
-                if (userId != 1) return NotFound("User not found");
+                var user = _userService.Get(userId);
 
-                return Ok();
+                if (user == null) return NotFound("User not found");
+
+                var roles = _userRoleService.GetRolesBy(user);
+
+                return Ok(roles);
             }
             catch (System.Exception)
             {
