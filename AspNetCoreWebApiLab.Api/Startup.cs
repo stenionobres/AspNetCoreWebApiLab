@@ -1,3 +1,4 @@
+using AspNetCoreWebApiLab.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -49,6 +50,10 @@ namespace AspNetCoreWebApiLab.Api
                 
                 swaggerOptions.IncludeXmlComments(xmlCommentsFullPath);
             });
+
+            services.AddTransient<UserService>();
+            services.AddTransient<RoleService>();
+            services.AddTransient<UserRoleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
