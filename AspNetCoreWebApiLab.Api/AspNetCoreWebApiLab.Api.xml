@@ -27,5 +27,28 @@
             <param name="roleId"></param>
             <returns></returns>
         </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.PostUserClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
+            <summary>
+            Associates an user with a claim. If claim doesn't exists it's created with new id.
+            </summary>
+            <param name="userId"></param>
+            <param name="claim"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.GetUserClaims(System.Int32)">
+            <summary>
+            Get claims associated with user.
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.DeleteUserClaims(System.Int32,System.Int32)">
+            <summary>
+            Removes claims associated with user.
+            </summary>
+            <param name="userId"></param>
+            <param name="claimId"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

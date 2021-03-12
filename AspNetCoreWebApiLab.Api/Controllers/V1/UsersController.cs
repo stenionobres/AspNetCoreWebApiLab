@@ -230,5 +230,85 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             }
         }
 
+        /// <summary>
+        /// Associates an user with a claim. If claim doesn't exists it's created with new id.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="claim"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("{userId}/claims")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClaimModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult PostUserClaims(int userId, ClaimModel claim)
+        {
+            try
+            {
+                var user = _userService.Get(userId);
+
+                if (user == null) return NotFound("User not found");
+
+
+                return Created($"/api/users/{userId}/claims", claim);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        /// <summary>
+        /// Get claims associated with user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{userId}/claims")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClaimModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult GetUserClaims(int userId)
+        {
+            try
+            {
+                var user = _userService.Get(userId);
+
+                if (user == null) return NotFound("User not found");
+
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        /// <summary>
+        /// Removes claims associated with user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="claimId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("{userId}/claims/{claimId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult DeleteUserClaims(int userId, int claimId)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
     }
 }
