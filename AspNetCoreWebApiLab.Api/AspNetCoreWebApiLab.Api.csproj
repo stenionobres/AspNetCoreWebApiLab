@@ -17,5 +17,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AspNetCoreWebApiLab.Persistence\AspNetCoreWebApiLab.Persistence.csproj" />
+  </ItemGroup>
+
 
 </Project>

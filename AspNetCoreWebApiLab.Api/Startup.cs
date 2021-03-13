@@ -1,7 +1,10 @@
 using AspNetCoreWebApiLab.Api.Services;
+using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
+using AspNetCoreWebApiLab.Persistence.EntityFrameworkContexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -55,6 +58,11 @@ namespace AspNetCoreWebApiLab.Api
             services.AddTransient<RoleService>();
             services.AddTransient<UserRoleService>();
             services.AddTransient<RoleClaimService>();
+
+            services.AddDbContext<AspNetCoreWebApiLabDbContext>();
+
+            services.AddIdentity<User, IdentityRole<int>>()
+                    .AddEntityFrameworkStores<AspNetCoreWebApiLabDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
