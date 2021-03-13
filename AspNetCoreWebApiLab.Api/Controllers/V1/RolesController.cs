@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using AspNetCoreWebApiLab.Api.Models.V1;
 using AspNetCoreWebApiLab.Api.Services;
+using System.Collections.Generic;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
@@ -14,10 +15,12 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
     public class RolesController : ControllerBase
     {
         private readonly RoleService _roleService;
+        private readonly RoleClaimService _roleClaimService;
 
-        public RolesController(RoleService roleService)
+        public RolesController(RoleService roleService, RoleClaimService roleClaimService)
         {
             _roleService = roleService;
+            _roleClaimService = roleClaimService;
         }
 
         [HttpGet("{roleId}")]
@@ -113,6 +116,92 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         {
             Response.Headers.Add("Allow", "GET,POST,PUT,DELETE");
             return Ok();
+        }
+
+        /// <summary>
+        /// Associates a claim with a role. If claim doesn't exists it's created with new id.
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="claim"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("{roleId}/claims")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClaimModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult PostRoleClaims(int roleId, ClaimModel claim)
+        {
+            try
+            {
+                var role = _roleService.Get(roleId);
+
+                if (role == null) return NotFound("Role not found");
+
+                _roleClaimService.Associate(role, claim);
+
+                return Created($"/api/roles/{roleId}/claims", claim);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        /// <summary>
+        /// Get claims associated with role.
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{roleId}/claims")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClaimModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult GetRoleClaims(int roleId)
+        {
+            try
+            {
+                var role = _roleService.Get(roleId);
+
+                if (role == null) return NotFound("Role not found");
+
+                var claims = _roleClaimService.GetClaimsBy(role);
+
+                return Ok(claims);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        /// <summary>
+        /// Removes claim associated with role.
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="claimId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("{roleId}/claims/{claimId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult DeleteRoleClaims(int roleId, int claimId)
+        {
+            try
+            {
+                _roleClaimService.RemoveAssociation(roleId, claimId);
+
+                return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
         }
     }
 }
