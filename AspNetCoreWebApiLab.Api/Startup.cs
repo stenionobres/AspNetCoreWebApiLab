@@ -54,6 +54,7 @@ namespace AspNetCoreWebApiLab.Api
             services.AddTransient<UserService>();
             services.AddTransient<RoleService>();
             services.AddTransient<UserRoleService>();
+            services.AddTransient<RoleClaimService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
