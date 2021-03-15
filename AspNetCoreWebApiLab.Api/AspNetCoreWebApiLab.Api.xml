@@ -19,12 +19,12 @@
             <param name="roleId"></param>
             <returns></returns>
         </member>
-        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.RolesController.DeleteRoleClaims(System.Int32,System.Int32)">
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.RolesController.DeleteRoleClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
             <summary>
             Removes claim associated with role.
             </summary>
             <param name="roleId"></param>
-            <param name="claimId"></param>
+            <param name="claim"></param>
             <returns></returns>
         </member>
         <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.PostUserRoles(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.RoleModel)">

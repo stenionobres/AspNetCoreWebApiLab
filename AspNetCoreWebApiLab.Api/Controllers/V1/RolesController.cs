@@ -139,7 +139,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 if (role == null) return NotFound("Role not found");
 
-                _roleClaimService.Associate(role, claim);
+                _roleClaimService.Associate(role.Id, claim);
 
                 return Created($"/api/roles/{roleId}/claims", claim);
             }
@@ -182,19 +182,19 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         /// Removes claim associated with role.
         /// </summary>
         /// <param name="roleId"></param>
-        /// <param name="claimId"></param>
+        /// <param name="claim"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("{roleId}/claims/{claimId}")]
+        [Route("{roleId}/claims")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteRoleClaims(int roleId, int claimId)
+        public ActionResult DeleteRoleClaims(int roleId, ClaimModel claim)
         {
             try
             {
-                _roleClaimService.RemoveAssociation(roleId, claimId);
+                _roleClaimService.RemoveAssociation(roleId, claim);
 
                 return Ok();
             }
