@@ -1,36 +1,44 @@
-﻿using AspNetCoreWebApiLab.Api.Models.V1;
+﻿using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using AspNetCoreWebApiLab.Api.Tools; 
+using AspNetCoreWebApiLab.Api.Models.V1;
+using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
 
 namespace AspNetCoreWebApiLab.Api.Services
 {
     public class UserRoleService
     {
-        private readonly RoleService _roleService;
+        private readonly UserManager<User> _userManager;
+        private readonly UserService _userService;
 
-        public UserRoleService(RoleService roleService)
+        public UserRoleService(UserManager<User> userManager, UserService userService)
         {
-            _roleService = roleService;
+            _userManager = userManager;
+            _userService = userService;
         }
 
-        public void Associate(UserModel user, RoleModel role)
+        public void Associate(int userId, RoleModel role)
         {
-            var roleSaved = _roleService.Get(role.Id);
+            var userSaved = _userService.GetUserBy(userId);
+            var identityResult = _userManager.AddToRoleAsync(userSaved, role.Description).Result;
 
-            if (roleSaved == null)
-            {
-                _roleService.Save(role);
-                roleSaved = role;
-            }
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
         public IEnumerable<RoleModel> GetRolesBy(UserModel user)
         {
-            return new List<RoleModel>();
+            var roles = _userManager.GetRolesAsync(new User() { Id = user.Id }).Result;
+
+            return roles.Select(roleName => new RoleModel() { Description = roleName });
         }
 
-        public void RemoveAssociation(int userId, int roleId)
+        public void RemoveAssociation(int userId, string roleName)
         {
+            var userSaved = _userService.GetUserBy(userId);
+            var identityResult = _userManager.RemoveFromRoleAsync(userSaved, roleName).Result;
 
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
     }
 }

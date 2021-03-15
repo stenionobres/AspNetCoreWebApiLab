@@ -68,6 +68,6 @@ namespace AspNetCoreWebApiLab.Api.Services
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
-        private User GetUserBy(int id) => _userManager.Users.FirstOrDefault(r => r.Id.Equals(id));
+        public User GetUserBy(int id) => _userManager.Users.FirstOrDefault(r => r.Id.Equals(id));
     }
 }

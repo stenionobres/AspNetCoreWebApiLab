@@ -167,7 +167,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 if (user == null) return NotFound("User not found");
 
-                _userRoleService.Associate(user, role);
+                _userRoleService.Associate(userId, role);
 
                 return Created($"/api/users/{userId}/roles", role);
             }
@@ -210,19 +210,19 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         /// Removes role associated with user.
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="roleId"></param>
+        /// <param name="roleName"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("{userId}/roles/{roleId}")]
+        [Route("{userId}/roles/{roleName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteUserRoles(int userId, int roleId)
+        public ActionResult DeleteUserRoles(int userId, string roleName)
         {
             try
             {
-                _userRoleService.RemoveAssociation(userId, roleId);
+                _userRoleService.RemoveAssociation(userId, roleName);
 
                 return Ok();
             }

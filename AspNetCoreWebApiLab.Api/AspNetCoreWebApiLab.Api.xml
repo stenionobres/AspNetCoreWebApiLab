@@ -42,12 +42,12 @@
             <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.DeleteUserRoles(System.Int32,System.Int32)">
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.DeleteUserRoles(System.Int32,System.String)">
             <summary>
             Removes role associated with user.
             </summary>
             <param name="userId"></param>
-            <param name="roleId"></param>
+            <param name="roleName"></param>
             <returns></returns>
         </member>
         <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.PostUserClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
