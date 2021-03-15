@@ -48,7 +48,7 @@ namespace AspNetCoreWebApiLab.Api.Services
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
-        private IdentityRole<int> GetIdentityRoleBy(int id) => _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(id));
+        public IdentityRole<int> GetIdentityRoleBy(int id) => _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(id));
 
     }
 }

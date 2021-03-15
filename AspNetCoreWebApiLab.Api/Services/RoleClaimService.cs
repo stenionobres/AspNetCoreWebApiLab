@@ -10,15 +10,17 @@ namespace AspNetCoreWebApiLab.Api.Services
     public class RoleClaimService
     {
         private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private readonly RoleService _roleService;
 
-        public RoleClaimService(RoleManager<IdentityRole<int>> roleManager)
+        public RoleClaimService(RoleManager<IdentityRole<int>> roleManager, RoleService roleService)
         {
             _roleManager = roleManager;
+            _roleService = roleService;
         }
 
         public void Associate(int roleId, ClaimModel claim)
         {
-            var identityRole = _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(roleId));
+            var identityRole = _roleService.GetIdentityRoleBy(roleId);
             var identityClaim = new Claim(claim.Type, claim.Value);
             var identityResult = _roleManager.AddClaimAsync(identityRole, identityClaim).Result;
 
@@ -34,7 +36,7 @@ namespace AspNetCoreWebApiLab.Api.Services
 
         public void RemoveAssociation(int roleId, ClaimModel claim)
         {
-            var identityRole = _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(roleId));
+            var identityRole = _roleService.GetIdentityRoleBy(roleId);
             var identityClaim = new Claim(claim.Type, claim.Value);
             var identityResult = _roleManager.RemoveClaimAsync(identityRole, identityClaim).Result;
 
