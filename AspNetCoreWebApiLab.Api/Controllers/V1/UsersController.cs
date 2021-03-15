@@ -80,7 +80,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 if (userSaved == null) return NotFound("User not found");
 
-                _userService.Update(userSaved, user);
+                _userService.Update(userSaved.Id, user);
 
                 return Ok(user);
             }
@@ -105,7 +105,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 userModelPatchDocument.ApplyTo(user);
 
-                _userService.Update(user);
+                _userService.Update(userId, user);
 
                 return Ok(user);
             }
