@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
 
 namespace AspNetCoreWebApiLab.Api.Services
@@ -20,6 +21,8 @@ namespace AspNetCoreWebApiLab.Api.Services
             var identityRole = _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(roleId));
             var identityClaim = new Claim(claim.Type, claim.Value);
             var identityResult = _roleManager.AddClaimAsync(identityRole, identityClaim).Result;
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
         public IEnumerable<ClaimModel> GetClaimsBy(RoleModel role)
@@ -34,6 +37,8 @@ namespace AspNetCoreWebApiLab.Api.Services
             var identityRole = _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(roleId));
             var identityClaim = new Claim(claim.Type, claim.Value);
             var identityResult = _roleManager.RemoveClaimAsync(identityRole, identityClaim).Result;
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
     }
 }

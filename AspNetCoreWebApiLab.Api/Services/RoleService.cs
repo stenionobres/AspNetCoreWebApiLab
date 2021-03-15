@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
 
 namespace AspNetCoreWebApiLab.Api.Services
@@ -27,7 +27,7 @@ namespace AspNetCoreWebApiLab.Api.Services
             var identityResult = _roleManager.CreateAsync(identityRole).Result;
             role.Id = identityRole.Id;
 
-            CatchErrorIfNeeded(identityResult);
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
         public void Update(RoleModel roleSaved, RoleModel role)
@@ -37,7 +37,7 @@ namespace AspNetCoreWebApiLab.Api.Services
 
             var identityResult = _roleManager.UpdateAsync(roleToBeUpdated).Result;
 
-            CatchErrorIfNeeded(identityResult);
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
         public void Delete(RoleModel role)
@@ -45,18 +45,10 @@ namespace AspNetCoreWebApiLab.Api.Services
             var savedRole = GetIdentityRoleBy(role.Id);
             var identityResult = _roleManager.DeleteAsync(savedRole).Result;
 
-            CatchErrorIfNeeded(identityResult);
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
         private IdentityRole<int> GetIdentityRoleBy(int id) => _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(id));
 
-        private void CatchErrorIfNeeded(IdentityResult identityResult)
-        {
-            if (!identityResult.Succeeded)
-            {
-                var errorDetail = identityResult.Errors.First().Description;
-                throw new ApplicationException(errorDetail);
-            }
-        }
     }
 }
