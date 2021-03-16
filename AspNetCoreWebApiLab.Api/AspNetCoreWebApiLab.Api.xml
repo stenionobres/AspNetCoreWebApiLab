@@ -65,12 +65,12 @@
             <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.DeleteUserClaims(System.Int32,System.Int32)">
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.DeleteUserClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
             <summary>
             Removes claims associated with user.
             </summary>
             <param name="userId"></param>
-            <param name="claimId"></param>
+            <param name="claim"></param>
             <returns></returns>
         </member>
     </members>

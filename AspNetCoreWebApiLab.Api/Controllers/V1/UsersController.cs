@@ -253,7 +253,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 if (user == null) return NotFound("User not found");
 
-                _userClaimService.Associate(user, claim);
+                _userClaimService.Associate(userId, claim);
 
                 return Created($"/api/users/{userId}/claims", claim);
             }
@@ -296,19 +296,19 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         /// Removes claims associated with user.
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="claimId"></param>
+        /// <param name="claim"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("{userId}/claims/{claimId}")]
+        [Route("{userId}/claims")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteUserClaims(int userId, int claimId)
+        public ActionResult DeleteUserClaims(int userId, ClaimModel claim)
         {
             try
             {
-                _userClaimService.RemoveAssociation(userId, claimId);
+                _userClaimService.RemoveAssociation(userId, claim);
 
                 return Ok();
             }
