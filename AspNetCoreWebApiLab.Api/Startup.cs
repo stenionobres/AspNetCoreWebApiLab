@@ -47,6 +47,7 @@ namespace AspNetCoreWebApiLab.Api
             services.AddSwaggerGen(swaggerOptions => 
             {
                 swaggerOptions.SwaggerDoc("IdentityAPI-V1.0", GetApiInfo(versionNumber: "1.0"));
+                swaggerOptions.SwaggerDoc("IdentityAPI-V2.0", GetApiInfo(versionNumber: "2.0"));
 
                 var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
@@ -81,6 +82,7 @@ namespace AspNetCoreWebApiLab.Api
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/IdentityAPI-V1.0/swagger.json", "ASP.NET Core Identity API 1.0");
+                c.SwaggerEndpoint("/swagger/IdentityAPI-V2.0/swagger.json", "ASP.NET Core Identity API 2.0");
                 c.RoutePrefix = string.Empty;
             });
 
