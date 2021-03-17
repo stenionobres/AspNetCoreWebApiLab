@@ -8,7 +8,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v1/roles")]
+    [Route("api/v{version:apiVersion}/roles")]
     [Consumes("application/json")]
     [Produces("application/json")]
     [ApiExplorerSettings(GroupName = "IdentityAPI-V1.0")]
