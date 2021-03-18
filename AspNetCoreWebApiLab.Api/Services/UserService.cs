@@ -30,7 +30,7 @@ namespace AspNetCoreWebApiLab.Api.Services
             };
         }
 
-        public void Save(UserModel user)
+        public UserModel Save(UserPostModel user)
         {
             var identityUser = new User()
             {
@@ -38,13 +38,21 @@ namespace AspNetCoreWebApiLab.Api.Services
                 LastName = user.LastName,
                 Occupation = user.Occupation,
                 Email = user.Email,
-                UserName = user.Email
+                UserName = user.Email,
             };
 
-            var identityResult = _userManager.CreateAsync(identityUser).Result;
-            user.Id = identityUser.Id;
+            var identityResult = _userManager.CreateAsync(identityUser, user.Password).Result;
 
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
+
+            return new UserModel()
+            {
+                Id = identityUser.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Occupation = user.Occupation,
+                Email = user.Email
+            };
         }
 
         public void Update(int userSavedId, UserModel user)

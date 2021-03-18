@@ -52,13 +52,17 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PostUsers(UserModel user)
+        public ActionResult PostUsers(UserPostModel user)
         {
             try
             {
-                _userService.Save(user);
+                var userCreated = _userService.Save(user);
 
-                return Created($"/api/users/{user.Id}", user);
+                return Created($"/api/users/{user.Id}", userCreated);
+            }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
             }
             catch (System.Exception)
             {
