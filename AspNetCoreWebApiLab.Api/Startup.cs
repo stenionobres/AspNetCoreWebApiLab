@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -57,6 +58,9 @@ namespace AspNetCoreWebApiLab.Api
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
                 
                 swaggerOptions.IncludeXmlComments(xmlCommentsFullPath);
+
+                swaggerOptions.AddSecurityDefinition("jwtAuth", GetOpenApiSecurityDefinition());
+                swaggerOptions.AddSecurityRequirement(GetOpenApiSecurityRequirement());
             });
 
             services.AddTransient<UserService>();
@@ -190,6 +194,32 @@ namespace AspNetCoreWebApiLab.Api
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"])),
                 ClockSkew = TimeSpan.Zero
             };
+        }
+
+        private OpenApiSecurityScheme GetOpenApiSecurityDefinition()
+        {
+            return new OpenApiSecurityScheme()
+            {
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                Name = "Authorization",
+                Description = "Please insert JWT with Bearer into field"
+            };
+        }
+
+        private OpenApiSecurityRequirement GetOpenApiSecurityRequirement()
+        {
+            var openApiSecurityRequirement = new OpenApiSecurityRequirement();
+            var openApiSecurityScheme = new OpenApiSecurityScheme() 
+            { 
+                Reference = new OpenApiReference() { Type = ReferenceType.SecurityScheme, Id = "jwtAuth" } 
+            };
+
+            openApiSecurityRequirement.Add(openApiSecurityScheme, new List<string>());
+
+            return openApiSecurityRequirement;
         }
     }
 }
