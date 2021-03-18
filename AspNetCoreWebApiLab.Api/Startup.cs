@@ -1,6 +1,8 @@
 using AspNetCoreWebApiLab.Api.Services;
 using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
 using AspNetCoreWebApiLab.Persistence.EntityFrameworkContexts;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,11 +14,13 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace AspNetCoreWebApiLab.Api
 {
@@ -65,6 +69,9 @@ namespace AspNetCoreWebApiLab.Api
 
             services.AddIdentity<User, IdentityRole<int>>()
                     .AddEntityFrameworkStores<AspNetCoreWebApiLabDbContext>();
+
+            services.AddAuthentication(authenticationOptions => { GetAuthenticationOptions(authenticationOptions); })
+                    .AddJwtBearer(jwtBearerOptions => { GetJwtBearerOptions(jwtBearerOptions); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -160,6 +167,25 @@ namespace AspNetCoreWebApiLab.Api
             return new UnprocessableEntityObjectResult(problemDetails)
             {
                 ContentTypes = { "application/json" }
+            };
+        }
+
+        private void GetAuthenticationOptions(AuthenticationOptions options)
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }
+
+        private void GetJwtBearerOptions(JwtBearerOptions options)
+        {
+            options.RequireHttpsMetadata = false;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = Configuration["Jwt:Issuer"],
+                ValidAudience = Configuration["Jwt:Issuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"])),
+                ClockSkew = TimeSpan.Zero
             };
         }
     }
