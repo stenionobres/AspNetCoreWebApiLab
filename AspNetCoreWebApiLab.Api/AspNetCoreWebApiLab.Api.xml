@@ -73,6 +73,13 @@
             <param name="claim"></param>
             <returns></returns>
         </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.SignIn(AspNetCoreWebApiLab.Api.Models.V2.SignInModel)">
+            <summary>
+            Gets JWT Token for authenticate on API
+            </summary>
+            <param name="signInModel"></param>
+            <returns></returns>
+        </member>
         <member name="M:AspNetCoreWebApiLab.Api.Controllers.V2.RolesController.PostRoleClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
             <summary>
             Associates a claim with a role. If claim doesn't exists it's created with new id.
