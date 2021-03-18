@@ -88,6 +88,10 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 return Ok(user);
             }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
+            }
             catch (System.Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
@@ -175,6 +179,10 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 return Created($"/api/users/{userId}/roles", role);
             }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
+            }
             catch (System.Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
@@ -260,6 +268,10 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 _userClaimService.Associate(userId, claim);
 
                 return Created($"/api/users/{userId}/claims", claim);
+            }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
             }
             catch (System.Exception)
             {

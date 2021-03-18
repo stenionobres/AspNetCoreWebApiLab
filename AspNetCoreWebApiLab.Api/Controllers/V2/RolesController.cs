@@ -57,6 +57,10 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
 
                 return Created($"/api/roles/{role.Id}", role);
             }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
+            }
             catch (System.Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
@@ -80,6 +84,10 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
                 _roleService.Update(roleSaved, role);
 
                 return Ok(role);
+            }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
             }
             catch (System.Exception)
             {
@@ -142,6 +150,10 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
                 _roleClaimService.Associate(role.Id, claim);
 
                 return Created($"/api/roles/{roleId}/claims", claim);
+            }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
             }
             catch (System.Exception)
             {
