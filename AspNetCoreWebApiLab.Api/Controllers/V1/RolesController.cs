@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Http;
 using AspNetCoreWebApiLab.Api.Models.V1;
 using AspNetCoreWebApiLab.Api.Services;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
     [ApiController]
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/roles")]
     [Consumes("application/json")]
@@ -26,6 +28,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpGet("{roleId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult GetRoles(int roleId)
@@ -47,6 +50,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PostRoles(RoleModel role)
@@ -70,6 +74,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -98,6 +103,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpDelete("{roleId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult DeleteRoles(int roleId)
@@ -120,6 +126,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
         [HttpOptions]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult OptionsRoles()
         {
             Response.Headers.Add("Allow", "GET,POST,PUT,DELETE");
@@ -136,6 +143,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{roleId}/claims")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClaimModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -170,6 +178,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{roleId}/claims")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClaimModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult GetRoleClaims(int roleId)
@@ -200,6 +209,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{roleId}/claims")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult DeleteRoleClaims(int roleId, ClaimModel claim)

@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.JsonPatch;
 using AspNetCoreWebApiLab.Api.Services;
 using AspNetCoreWebApiLab.Api.Models.V2;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
     [ApiController]
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/users")]
     [Consumes("application/json")]
@@ -30,6 +32,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult GetUsers(int userId)
@@ -51,6 +54,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PostUsers(UserPostModel user)
@@ -74,6 +78,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -102,6 +107,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpPatch("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PatchUsers(int userId, JsonPatchDocument<UserModel> userModelPatchDocument)
@@ -127,6 +133,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [HttpDelete("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult DeleteUsers(int userId)
@@ -149,6 +156,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
         [HttpOptions]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult OptionsUsers()
         {
             Response.Headers.Add("Allow", "GET,POST,PUT,PATCH,DELETE");
@@ -165,6 +173,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{userId}/roles")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -199,6 +208,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{userId}/roles")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RoleModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult GetUserRoles(int userId)
@@ -229,6 +239,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{userId}/roles/{roleName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult DeleteUserRoles(int userId, string roleName)
@@ -255,6 +266,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{userId}/claims")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClaimModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -289,6 +301,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{userId}/claims")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClaimModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult GetUserClaims(int userId)
@@ -319,6 +332,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         [Route("{userId}/claims")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult DeleteUserClaims(int userId, ClaimModel claim)
@@ -341,6 +355,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         /// <param name="signInModel"></param>
         /// <returns></returns>
         [HttpPost]
+        [AllowAnonymous]
         [Route("signin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
