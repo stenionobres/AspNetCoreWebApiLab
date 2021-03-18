@@ -4,6 +4,7 @@ using AspNetCoreWebApiLab.Api.Models.V1;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.JsonPatch;
 using AspNetCoreWebApiLab.Api.Services;
+using AspNetCoreWebApiLab.Api.Models.V2;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1
 {
@@ -327,6 +328,38 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
                 _userClaimService.RemoveAssociation(userId, claim);
 
                 return Ok();
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        /// <summary>
+        /// Gets JWT Token for authenticate on API
+        /// </summary>
+        /// <param name="signInModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("signin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult SignIn(SignInModel signInModel)
+        {
+            try
+            {
+                var jwtToken = _userService.SignIn(signInModel);
+
+                if (string.IsNullOrEmpty(jwtToken)) return NotFound("User not found");
+
+                return Ok(new { token = jwtToken });
+            }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
             }
             catch (System.Exception)
             {
