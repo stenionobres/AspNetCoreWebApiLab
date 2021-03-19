@@ -27,6 +27,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [API First](#api-first)
     * [OpenAPI Specification](#openAPI-specification)
     * [ApiExplorer](#apiexplorer)
+* [Error handling and validation](#error-handling-and-validation)
 
 ## Prerequisites
 
@@ -270,3 +271,46 @@ public class UsersController : ControllerBase
 }
 ```
 
+## Error handling and validation
+
+One the most important requirements of an API is data validation with the purpose of maintain the data integrity.
+
+The status codes used when data is inconsistent are **400 - Bad Request** and **422 - Unprocessable Entity**. By default the ASP.NET Core Web API uses the 400 status, however a configuration on [Startup](./AspNetCoreWebApiLab.Api/Startup.cs) class using `InvalidModelStateResponseFactory` attribute of ApiBehaviorOptions was made to use 422 status. 
+
+The strategies that can be used for validation are listed below:
+
+* Data annotations
+
+These are attributes that apply predefined rules on api models. The [UserModel](./AspNetCoreWebApiLab.Api/Models/V1/UserModel.cs) class has some examples of DataAnnotations;
+
+* IValidatableObject interface
+
+The `IValidatableObject` interface provides a way to create a custom validation inside model class. The [UserModel](./AspNetCoreWebApiLab.Api/Models/V1/UserModel.cs) class has an example of IValidatableObject interface;
+
+* Custom validation attribute
+
+Another option to validate data is to create a custom validation attribute. An example is shown below:
+
+``` C#
+public class DotComDomainAttribute : ValidationAttribute
+{
+    public override bool IsValid(object value)
+    {
+        var inputValue = value as string;
+
+        return !string.IsNullOrEmpty(inputValue) && inputValue.Contains(".com");
+    }
+}
+
+public class Model
+{
+    [DotComDomain(ErrorMessage = "Only .com domains are allowed.")]
+    public string Domain { get; set; }
+}
+```
+
+* Fluent Validation
+
+[Fluent Validation](https://github.com/FluentValidation/FluentValidation) is a small validation library for .NET that uses a fluent interface and lambda expressions for building validation rules.
+
+If you need apply more complex rules the Fluent Validation library can be a good choice.
