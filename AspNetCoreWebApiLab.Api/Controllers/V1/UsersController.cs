@@ -52,9 +52,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PostUsers(UserPostModel user)
@@ -76,9 +78,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -105,9 +109,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         }
 
         [HttpPatch("{userId}")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult PatchUsers(int userId, JsonPatchDocument<UserModel> userModelPatchDocument)
@@ -131,9 +137,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         }
 
         [HttpDelete("{userId}")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult DeleteUsers(int userId)
@@ -171,9 +179,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         /// <returns></returns>
         [HttpPost]
         [Route("{userId}/roles")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -237,9 +247,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         /// <returns></returns>
         [HttpDelete]
         [Route("{userId}/roles/{roleName}")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult DeleteUserRoles(int userId, string roleName)
@@ -264,9 +276,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         /// <returns></returns>
         [HttpPost]
         [Route("{userId}/claims")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClaimModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -330,9 +344,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
         /// <returns></returns>
         [HttpDelete]
         [Route("{userId}/claims")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult DeleteUserClaims(int userId, ClaimModel claim)
