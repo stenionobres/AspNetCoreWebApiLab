@@ -64,6 +64,22 @@ The solution `AspNetCoreWebApiLab` is divided into three projects: `AspNetCoreWe
 
 >[Swashbuckle.AspNetCore 5.6.3](https://www.nuget.org/packages/Swashbuckle.AspNetCore/5.6.3)
 
+>[Microsoft.AspNetCore.JsonPatch 3.1.12](https://www.nuget.org/packages/Microsoft.AspNetCore.JsonPatch/3.1.12)
+
+>[Microsoft.AspNetCore.Mvc.NewtonsoftJson 3.1.12](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.NewtonsoftJson/3.1.12)
+
+>[Microsoft.AspNetCore.Authentication.JwtBearer 3.1.13](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer/3.1.13)
+
+>[Microsoft.AspNetCore.Identity.EntityFrameworkCore 3.1.13](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/3.1.13)
+
+>[Microsoft.EntityFrameworkCore.SqlServer 3.1.13](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/3.1.13)
+
+>[Microsoft.EntityFrameworkCore.Tools 3.1.13](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/3.1.13)
+
+>[Microsoft.Extensions.Logging.Console 3.1.13](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.13)
+
+>[RestSharp 106.11.7](https://www.nuget.org/packages/RestSharp/106.11.7)
+
 ### AspNetCoreWebApiLab-Api
 
 ### AspNetCoreWebApiLab-ApiClient
