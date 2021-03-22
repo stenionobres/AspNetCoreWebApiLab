@@ -28,6 +28,10 @@ After the case studies, the main conclusions were documented in this file and se
     * [OpenAPI Specification](#openAPI-specification)
     * [ApiExplorer](#apiexplorer)
 * [Error handling and validation](#error-handling-and-validation)
+* [Security](#security)
+    * [Authentication](#authentication)
+    * [JWT and Swagger](#jwt-and-swagger)
+    * [Authorization](#authorization)
 
 ## Prerequisites
 
@@ -314,3 +318,26 @@ public class Model
 [Fluent Validation](https://github.com/FluentValidation/FluentValidation) is a small validation library for .NET that uses a fluent interface and lambda expressions for building validation rules.
 
 If you need apply more complex rules the Fluent Validation library can be a good choice.
+
+## Security
+
+One the most important non-functional requirements of an API is security. Basically API Security is responsible to maintain data integrity and create access levels on endpoints.
+
+### Authentication
+
+Authentication is a process that answer the question, **Who are you in the application?** A good choice for api authentication is [JWT (Json Web Token)](https://github.com/stenionobres/AspNetCoreIdentityLab#json-web-token-jwt). A similar configuration for JWT was defined in this project.
+
+### JWT and Swagger
+
+For use JWT authentication token with Swagger is necessary to configure some security definitions on [Startup](./AspNetCoreWebApiLab.Api/Startup.cs) class. Below are listed the method names that configures JWT Security with Swagger:
+
+``` C#
+swaggerOptions.AddSecurityDefinition("jwtAuth", GetOpenApiSecurityDefinition());
+swaggerOptions.AddSecurityRequirement(GetOpenApiSecurityRequirement());
+```
+
+### Authorization
+
+Authorization is a process that answer the question, **What can you do in the application?** The use of `[Authorize]` attribute allows to restrict wich actions the user of API can do.
+
+Some roles was defined with Authorize attribute and [JwtService](./AspNetCoreWebApiLab.Api/Services/JwtService.cs) uses that roles to make the access token, so only tokens with that roles can request the endpoints. More details about how authorization works on ASP.NET Core can be accessed [here](https://github.com/stenionobres/AspNetCoreIdentityLab#authorizing-a-user).
