@@ -32,6 +32,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [Authentication](#authentication)
     * [JWT and Swagger](#jwt-and-swagger)
     * [Authorization](#authorization)
+* [References used](#references-used)
 
 ## Prerequisites
 
@@ -357,3 +358,18 @@ swaggerOptions.AddSecurityRequirement(GetOpenApiSecurityRequirement());
 Authorization is a process that answer the question, **What can you do in the application?** The use of `[Authorize]` attribute allows to restrict wich actions the user of API can do.
 
 Some roles was defined with Authorize attribute and [JwtService](./AspNetCoreWebApiLab.Api/Services/JwtService.cs) uses that roles to make the access token, so only tokens with that roles can request the endpoints. More details about how authorization works on ASP.NET Core can be accessed [here](https://github.com/stenionobres/AspNetCoreIdentityLab#authorizing-a-user).
+
+## References used
+
+* [Pluralsight - Building an API with ASP.NET Core](https://www.pluralsight.com/courses/building-api-aspdotnet-core)
+
+* [Pluralsight - Getting Started with Swagger Tools](https://www.pluralsight.com/courses/getting-started-swagger-tools)
+
+* [Pluralsight - API Development in ASP.NET Core](https://www.pluralsight.com/paths/api-development-in-aspnet-core)
+
+* [Apigee - Web API Design](https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf)
+
+* [Matthias Biehl - API University](https://api-university.com/books/)
+
+* [Code Maze - Ultimate ASP.NET Core Web API](https://code-maze.com/ultimate-aspnet-core-web-api/)
+
