@@ -33,6 +33,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [JWT and Swagger](#jwt-and-swagger)
     * [Authorization](#authorization)
 * [References used](#references-used)
+* [Authors](#authors)
 
 ## Prerequisites
 
@@ -373,3 +374,6 @@ Some roles was defined with Authorize attribute and [JwtService](./AspNetCoreWeb
 
 * [Code Maze - Ultimate ASP.NET Core Web API](https://code-maze.com/ultimate-aspnet-core-web-api/)
 
+## Authors
+
+* **Stenio Nobres** - [Github](https://github.com/stenionobres) | [LinkedIn](https://www.linkedin.com/in/stenionobres/)
