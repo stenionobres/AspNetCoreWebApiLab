@@ -10,11 +10,18 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
     {
         private RestClient _restClient;
 
+        private string _authorizationToken;
+
         private const string ResourceName = "users";
 
         public UsersService(string baseUrl)
         {
             _restClient = new RestClient(baseUrl);
+        }
+
+        public UsersService(string baseUrl, string authorizationToken) : this(baseUrl)
+        {
+            _authorizationToken = authorizationToken;
         }
 
         public Jwt SignIn(SignIn signInData)
@@ -33,7 +40,7 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
 
         public User GetUser(int id)
         {
-            var request = new RestRequest($"{ResourceName}/{id}", Method.GET);
+            var request = BuildRequest($"{ResourceName}/{id}", Method.GET);
             var response = _restClient.Execute<User>(request);
 
             if (response.IsSuccessful)
@@ -46,8 +53,7 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
 
         public User PostUser(User user)
         {
-            var request = new RestRequest($"{ResourceName}", Method.POST);
-            request.AddJsonBody(user);
+            var request = BuildRequest($"{ResourceName}", Method.POST, user);
             var response = _restClient.Execute<User>(request);
 
             if (response.IsSuccessful)
@@ -60,8 +66,7 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
 
         public User PutUser(User user)
         {
-            var request = new RestRequest($"{ResourceName}", Method.PUT);
-            request.AddJsonBody(user);
+            var request = BuildRequest($"{ResourceName}", Method.PUT, user);
             var response = _restClient.Execute<User>(request);
 
             if (response.IsSuccessful)
@@ -74,8 +79,7 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
 
         public User PatchUser(int id, IEnumerable<PatchOperation> patchOperations)
         {
-            var request = new RestRequest($"{ResourceName}/{id}", Method.PATCH);
-            request.AddJsonBody(patchOperations);
+            var request = BuildRequest($"{ResourceName}/{id}", Method.PATCH, patchOperations);
             var response = _restClient.Execute<User>(request);
 
             if (response.IsSuccessful)
@@ -88,7 +92,7 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
 
         public bool DeleteUser(int id)
         {
-            var request = new RestRequest($"{ResourceName}/{id}", Method.DELETE);
+            var request = BuildRequest($"{ResourceName}/{id}", Method.DELETE);
             var response = _restClient.Execute(request);
 
             if (response.IsSuccessful)
@@ -101,11 +105,27 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
 
         public string OptionsUser()
         {
-            var request = new RestRequest($"{ResourceName}", Method.OPTIONS);
+            var request = BuildRequest($"{ResourceName}", Method.OPTIONS);
             var response = _restClient.Execute(request);
             var allowHeader = response.Headers.FirstOrDefault(h => h.Name.Equals("Allow"));
 
             return allowHeader.Value.ToString();
+        }
+
+        private RestRequest BuildRequest(string resource, Method method)
+        {
+            var request = new RestRequest(resource, method);
+            request.AddHeader("Authorization", $"Bearer {_authorizationToken}");
+
+            return request;
+        }
+
+        private RestRequest BuildRequest(string resource, Method method, object bodyData)
+        {
+            var request = BuildRequest(resource, method);
+            request.AddJsonBody(bodyData);
+
+            return request;
         }
 
     }
