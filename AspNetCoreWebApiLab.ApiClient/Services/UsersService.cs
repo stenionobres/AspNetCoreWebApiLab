@@ -17,6 +17,20 @@ namespace AspNetCoreWebApiLab.ApiClient.Services
             _restClient = new RestClient(baseUrl);
         }
 
+        public Jwt SignIn(SignIn signInData)
+        {
+            var request = new RestRequest($"{ResourceName}/signin", Method.POST);
+            request.AddJsonBody(signInData);
+            var response = _restClient.Execute<Jwt>(request);
+
+            if (response.IsSuccessful)
+            {
+                return response.Data;
+            }
+
+            throw new ApplicationException($"{Convert.ToInt32(response.StatusCode)}: {response.Content}");
+        }
+
         public User GetUser(int id)
         {
             var request = new RestRequest($"{ResourceName}/{id}", Method.GET);
