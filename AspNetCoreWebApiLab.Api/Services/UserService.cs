@@ -134,6 +134,14 @@ namespace AspNetCoreWebApiLab.Api.Services
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
+        public async Task DeleteAsync(UserModel user)
+        {
+            var identityUser = await GetUserAsyncBy(user.Id);
+            var identityResult = await _userManager.DeleteAsync(identityUser);
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
+
         public User GetUserBy(int id) => _userManager.Users.FirstOrDefault(r => r.Id.Equals(id));
 
         public async Task<User> GetUserAsyncBy(int id) => await _userManager.FindByIdAsync(id.ToString());
