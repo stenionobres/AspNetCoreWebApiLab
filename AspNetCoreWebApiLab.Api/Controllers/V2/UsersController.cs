@@ -258,15 +258,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PostUserClaims(int userId, ClaimModel claim)
+        public async Task<ActionResult> PostUserClaims(int userId, ClaimModel claim)
         {
             try
             {
-                var user = _userService.Get(userId);
+                var user = await _userService.GetAsync(userId);
 
                 if (user == null) return NotFound("User not found");
 
-                _userClaimService.Associate(userId, claim);
+                await _userClaimService.AssociateAsync(userId, claim);
 
                 return Created($"/api/users/{userId}/claims", claim);
             }

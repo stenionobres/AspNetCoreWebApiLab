@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
@@ -24,6 +25,15 @@ namespace AspNetCoreWebApiLab.Api.Services
             var userSaved = _userService.GetUserBy(userId);
             var identityClaim = new Claim(claim.Type, claim.Value);
             var identityResult = _userManager.AddClaimAsync(userSaved, identityClaim).Result;
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
+
+        public async Task AssociateAsync(int userId, ClaimModel claim)
+        {
+            var userSaved = await _userService.GetUserAsyncBy(userId);
+            var identityClaim = new Claim(claim.Type, claim.Value);
+            var identityResult = await _userManager.AddClaimAsync(userSaved, identityClaim);
 
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
