@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
@@ -18,6 +19,13 @@ namespace AspNetCoreWebApiLab.Api.Services
         {
             var role = GetIdentityRoleBy(roleId);
             
+            return role == null ? null : new RoleModel() { Id = role.Id, Description = role.Name };
+        }
+
+        public async Task<RoleModel> GetAsync(int roleId)
+        {
+            var role = await GetIdentityRoleAsyncBy(roleId);
+
             return role == null ? null : new RoleModel() { Id = role.Id, Description = role.Name };
         }
 
@@ -49,6 +57,8 @@ namespace AspNetCoreWebApiLab.Api.Services
         }
 
         public IdentityRole<int> GetIdentityRoleBy(int id) => _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(id));
+
+        public async Task<IdentityRole<int>> GetIdentityRoleAsyncBy(int id) => await _roleManager.FindByIdAsync(id.ToString());
 
     }
 }
