@@ -101,15 +101,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteRoles(int roleId)
+        public async Task<ActionResult> DeleteRoles(int roleId)
         {
             try
             {
-                var role = _roleService.Get(roleId);
+                var role = await _roleService.GetAsync(roleId);
 
                 if (role == null) return NotFound("Role not found");
 
-                _roleService.Delete(role);
+                await _roleService.DeleteAsync(role);
 
                 return Ok();
             }

@@ -75,6 +75,14 @@ namespace AspNetCoreWebApiLab.Api.Services
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
+        public async Task DeleteAsync(RoleModel role)
+        {
+            var savedRole = await GetIdentityRoleAsyncBy(role.Id);
+            var identityResult = await _roleManager.DeleteAsync(savedRole);
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
+
         public IdentityRole<int> GetIdentityRoleBy(int id) => _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(id));
 
         public async Task<IdentityRole<int>> GetIdentityRoleAsyncBy(int id) => await _roleManager.FindByIdAsync(id.ToString());
