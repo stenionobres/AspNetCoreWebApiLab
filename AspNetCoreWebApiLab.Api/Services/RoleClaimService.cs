@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
@@ -23,6 +24,15 @@ namespace AspNetCoreWebApiLab.Api.Services
             var identityRole = _roleService.GetIdentityRoleBy(roleId);
             var identityClaim = new Claim(claim.Type, claim.Value);
             var identityResult = _roleManager.AddClaimAsync(identityRole, identityClaim).Result;
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
+
+        public async Task AssociateAsync(int roleId, ClaimModel claim)
+        {
+            var identityRole = await _roleService.GetIdentityRoleAsyncBy(roleId);
+            var identityClaim = new Claim(claim.Type, claim.Value);
+            var identityResult = await _roleManager.AddClaimAsync(identityRole, identityClaim);
 
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }

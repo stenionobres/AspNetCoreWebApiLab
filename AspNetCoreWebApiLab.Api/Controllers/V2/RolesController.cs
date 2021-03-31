@@ -140,15 +140,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PostRoleClaims(int roleId, ClaimModel claim)
+        public async Task<ActionResult> PostRoleClaims(int roleId, ClaimModel claim)
         {
             try
             {
-                var role = _roleService.Get(roleId);
+                var role = await _roleService.GetAsync(roleId);
 
                 if (role == null) return NotFound("Role not found");
 
-                _roleClaimService.Associate(role.Id, claim);
+                await _roleClaimService.AssociateAsync(role.Id, claim);
 
                 return Created($"/api/roles/{roleId}/claims", claim);
             }
