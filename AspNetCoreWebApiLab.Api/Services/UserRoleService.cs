@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools; 
@@ -22,6 +23,14 @@ namespace AspNetCoreWebApiLab.Api.Services
         {
             var userSaved = _userService.GetUserBy(userId);
             var identityResult = _userManager.AddToRoleAsync(userSaved, role.Description).Result;
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
+
+        public async Task AssociateAsync(int userId, RoleModel role)
+        {
+            var userSaved = await _userService.GetUserAsyncBy(userId);
+            var identityResult = await _userManager.AddToRoleAsync(userSaved, role.Description);
 
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }

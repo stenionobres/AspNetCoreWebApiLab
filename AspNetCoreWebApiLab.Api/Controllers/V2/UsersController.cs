@@ -168,15 +168,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PostUserRoles(int userId, RoleModel role)
+        public async Task<ActionResult> PostUserRoles(int userId, RoleModel role)
         {
             try
             {
-                var user = _userService.Get(userId);
+                var user = await _userService.GetAsync(userId);
 
                 if (user == null) return NotFound("User not found");
 
-                _userRoleService.Associate(userId, role);
+                await _userRoleService.AssociateAsync(userId, role);
 
                 return Created($"/api/users/{userId}/roles", role);
             }
