@@ -74,15 +74,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PutRoles(RoleModel role)
+        public async Task<ActionResult> PutRoles(RoleModel role)
         {
             try
             {
-                var roleSaved = _roleService.Get(role.Id);
+                var roleSaved = await _roleService.GetAsync(role.Id);
 
                 if (roleSaved == null) return NotFound("Role not found");
 
-                _roleService.Update(roleSaved, role);
+                await _roleService.UpdateAsync(roleSaved, role);
 
                 return Ok(role);
             }

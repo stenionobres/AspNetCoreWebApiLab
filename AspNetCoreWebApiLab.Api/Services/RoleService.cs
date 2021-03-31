@@ -57,6 +57,16 @@ namespace AspNetCoreWebApiLab.Api.Services
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
+        public async Task UpdateAsync(RoleModel roleSaved, RoleModel role)
+        {
+            var roleToBeUpdated = await GetIdentityRoleAsyncBy(roleSaved.Id);
+            roleToBeUpdated.Name = role.Description;
+
+            var identityResult = await _roleManager.UpdateAsync(roleToBeUpdated);
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
+
         public void Delete(RoleModel role)
         {
             var savedRole = GetIdentityRoleBy(role.Id);
