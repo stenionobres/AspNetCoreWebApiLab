@@ -42,6 +42,13 @@ namespace AspNetCoreWebApiLab.Api.Services
             return roles.Select(roleName => new RoleModel() { Description = roleName });
         }
 
+        public async Task<IEnumerable<RoleModel>> GetRolesAsyncBy(UserModel user)
+        {
+            var roles = await _userManager.GetRolesAsync(new User() { Id = user.Id });
+
+            return roles.Select(roleName => new RoleModel() { Description = roleName });
+        }
+
         public void RemoveAssociation(int userId, string roleName)
         {
             var userSaved = _userService.GetUserBy(userId);

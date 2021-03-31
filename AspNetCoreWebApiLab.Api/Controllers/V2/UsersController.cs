@@ -201,15 +201,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult GetUserRoles(int userId)
+        public async Task<ActionResult> GetUserRoles(int userId)
         {
             try
             {
-                var user = _userService.Get(userId);
+                var user = await _userService.GetAsync(userId);
 
                 if (user == null) return NotFound("User not found");
 
-                var roles = _userRoleService.GetRolesBy(user);
+                var roles = await _userRoleService.GetRolesAsyncBy(user);
 
                 return Ok(roles);
             }
