@@ -56,5 +56,13 @@ namespace AspNetCoreWebApiLab.Api.Services
 
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
+
+        public async Task RemoveAssociationAsync(int userId, string roleName)
+        {
+            var userSaved = await _userService.GetUserAsyncBy(userId);
+            var identityResult = await _userManager.RemoveFromRoleAsync(userSaved, roleName);
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
     }
 }
