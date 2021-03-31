@@ -53,11 +53,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PostUsers(UserPostModel user)
+        public async Task<ActionResult> PostUsers(UserPostModel user)
         {
             try
             {
-                var userCreated = _userService.Save(user);
+                var userCreated = await _userService.SaveAsync(user);
 
                 return Created($"/api/users/{user.Id}", userCreated);
             }

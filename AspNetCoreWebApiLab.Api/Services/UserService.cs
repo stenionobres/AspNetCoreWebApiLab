@@ -75,6 +75,31 @@ namespace AspNetCoreWebApiLab.Api.Services
             };
         }
 
+        public async Task<UserModel> SaveAsync(UserPostModel user)
+        {
+            var identityUser = new User()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Occupation = user.Occupation,
+                Email = user.Email,
+                UserName = user.Email,
+            };
+
+            var identityResult = await _userManager.CreateAsync(identityUser, user.Password);
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+
+            return new UserModel()
+            {
+                Id = identityUser.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Occupation = user.Occupation,
+                Email = user.Email
+            };
+        }
+
         public void Update(int userSavedId, UserModel user)
         {
             var identityUser = GetUserBy(userSavedId);
