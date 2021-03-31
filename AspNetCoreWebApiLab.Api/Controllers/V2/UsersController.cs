@@ -104,17 +104,17 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PatchUsers(int userId, JsonPatchDocument<UserModel> userModelPatchDocument)
+        public async Task<ActionResult> PatchUsers(int userId, JsonPatchDocument<UserModel> userModelPatchDocument)
         {
             try
             {
-                var user = _userService.Get(userId);
+                var user = await _userService.GetAsync(userId);
 
                 if (user == null) return NotFound("User not found");
 
                 userModelPatchDocument.ApplyTo(user);
 
-                _userService.Update(userId, user);
+                await _userService.UpdateAsync(userId, user);
 
                 return Ok(user);
             }
