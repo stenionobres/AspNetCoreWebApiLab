@@ -46,6 +46,14 @@ namespace AspNetCoreWebApiLab.Api.Services
             return claims.Select(c => new ClaimModel() { Type = c.Type, Value = c.Value });
         }
 
+        public async Task<IEnumerable<ClaimModel>> GetClaimsAsyncBy(UserModel user)
+        {
+            var identityUser = await _userService.GetUserAsyncBy(user.Id);
+            var claims = await _userManager.GetClaimsAsync(identityUser);
+
+            return claims.Select(c => new ClaimModel() { Type = c.Type, Value = c.Value });
+        }
+
         public void RemoveAssociation(int userId, ClaimModel claim)
         {
             var userSaved = _userService.GetUserBy(userId);
