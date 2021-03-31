@@ -50,11 +50,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PostRoles(RoleModel role)
+        public async Task<ActionResult> PostRoles(RoleModel role)
         {
             try
             {
-                _roleService.Save(role);
+                await _roleService.SaveAsync(role);
 
                 return Created($"/api/roles/{role.Id}", role);
             }
