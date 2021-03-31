@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreWebApiLab.Api.Models.V1;
 using System.Collections.Generic;
@@ -31,11 +32,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult GetUsers(int userId)
+        public async Task<ActionResult> GetUsers(int userId)
         {
             try
             {
-                var user = _userService.Get(userId);
+                var user = await _userService.GetAsync(userId);
 
                 if (user == null) return NotFound("User not found");
 

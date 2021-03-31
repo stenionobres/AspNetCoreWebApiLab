@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
@@ -22,6 +23,21 @@ namespace AspNetCoreWebApiLab.Api.Services
         public UserModel Get(int userId)
         {
             var user = GetUserBy(userId);
+
+            return user == null ? null :
+            new UserModel()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Occupation = user.Occupation,
+                Email = user.Email
+            };
+        }
+
+        public async Task<UserModel> GetAsync(int userId)
+        {
+            var user = await GetUserAsyncBy(userId);
 
             return user == null ? null :
             new UserModel()
@@ -81,6 +97,8 @@ namespace AspNetCoreWebApiLab.Api.Services
         }
 
         public User GetUserBy(int id) => _userManager.Users.FirstOrDefault(r => r.Id.Equals(id));
+
+        public async Task<User> GetUserAsyncBy(int id) => await _userManager.FindByIdAsync(id.ToString());
 
         public string SignIn(SignInModel signInModel)
         {
