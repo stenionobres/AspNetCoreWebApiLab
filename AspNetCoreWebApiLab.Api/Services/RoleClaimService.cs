@@ -44,6 +44,13 @@ namespace AspNetCoreWebApiLab.Api.Services
             return claims.Select(c => new ClaimModel() { Type = c.Type, Value = c.Value });
         }
 
+        public async Task<IEnumerable<ClaimModel>> GetClaimsAsyncBy(RoleModel role)
+        {
+            var claims = await _roleManager.GetClaimsAsync(new IdentityRole<int>() { Id = role.Id });
+
+            return claims.Select(c => new ClaimModel() { Type = c.Type, Value = c.Value });
+        }
+
         public void RemoveAssociation(int roleId, ClaimModel claim)
         {
             var identityRole = _roleService.GetIdentityRoleBy(roleId);

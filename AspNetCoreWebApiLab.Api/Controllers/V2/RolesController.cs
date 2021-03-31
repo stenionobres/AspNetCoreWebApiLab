@@ -173,15 +173,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult GetRoleClaims(int roleId)
+        public async Task<ActionResult> GetRoleClaims(int roleId)
         {
             try
             {
-                var role = _roleService.Get(roleId);
+                var role = await _roleService.GetAsync(roleId);
 
                 if (role == null) return NotFound("Role not found");
 
-                var claims = _roleClaimService.GetClaimsBy(role);
+                var claims = await _roleClaimService.GetClaimsAsyncBy(role);
 
                 return Ok(claims);
             }
