@@ -321,11 +321,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult DeleteUserClaims(int userId, ClaimModel claim)
+        public async Task<ActionResult> DeleteUserClaims(int userId, ClaimModel claim)
         {
             try
             {
-                _userClaimService.RemoveAssociation(userId, claim);
+                await _userClaimService.RemoveAssociationAsync(userId, claim);
 
                 return Ok();
             }
