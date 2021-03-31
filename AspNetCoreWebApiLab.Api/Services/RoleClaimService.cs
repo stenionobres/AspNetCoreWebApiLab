@@ -59,5 +59,14 @@ namespace AspNetCoreWebApiLab.Api.Services
 
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
+
+        public async Task RemoveAssociationAsync(int roleId, ClaimModel claim)
+        {
+            var identityRole = await _roleService.GetIdentityRoleAsyncBy(roleId);
+            var identityClaim = new Claim(claim.Type, claim.Value);
+            var identityResult = await _roleManager.RemoveClaimAsync(identityRole, identityClaim);
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
     }
 }
