@@ -113,6 +113,19 @@ namespace AspNetCoreWebApiLab.Api.Services
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
         }
 
+        public async Task UpdateAsync(int userSavedId, UserModel user)
+        {
+            var identityUser = await GetUserAsyncBy(userSavedId);
+
+            identityUser.FirstName = user.FirstName;
+            identityUser.LastName = user.LastName;
+            identityUser.Occupation = user.Occupation;
+
+            var identityResult = await _userManager.UpdateAsync(identityUser);
+
+            CustomIdentityError.CatchErrorIfNeeded(identityResult);
+        }
+
         public void Delete(UserModel user)
         {
             var identityUser = GetUserBy(user.Id);

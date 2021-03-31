@@ -77,15 +77,15 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult PutUsers(UserModel user)
+        public async Task<ActionResult> PutUsers(UserModel user)
         {
             try
             {
-                var userSaved = _userService.Get(user.Id);
+                var userSaved = await _userService.GetAsync(user.Id);
 
                 if (userSaved == null) return NotFound("User not found");
 
-                _userService.Update(userSaved.Id, user);
+                await _userService.UpdateAsync(userSaved.Id, user);
 
                 return Ok(user);
             }
