@@ -51,8 +51,8 @@ namespace AspNetCoreWebApiLab.Api
 
             services.AddSwaggerGen(swaggerOptions => 
             {
-                swaggerOptions.SwaggerDoc("IdentityAPI-V1.0", GetApiInfo(versionNumber: "1.0"));
-                swaggerOptions.SwaggerDoc("IdentityAPI-V2.0", GetApiInfo(versionNumber: "2.0"));
+                swaggerOptions.SwaggerDoc("IdentityAPI-V1.0", GetApiInfo(versionNumber: "1.0", GetApiDescriptionV1()));
+                swaggerOptions.SwaggerDoc("IdentityAPI-V2.0", GetApiInfo(versionNumber: "2.0", GetApiDescriptionV2()));
 
                 var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
@@ -120,13 +120,13 @@ namespace AspNetCoreWebApiLab.Api
                                                                              new UrlSegmentApiVersionReader());
         }
 
-        private OpenApiInfo GetApiInfo(string versionNumber)
+        private OpenApiInfo GetApiInfo(string versionNumber, string ApiDescription)
         {
             return new OpenApiInfo()
             {
                 Title = $"ASP.NET Core Identity API {versionNumber}",
                 Version = $"{versionNumber}",
-                Description = "Through this API you can access ASP.NET Core Identity services",
+                Description = ApiDescription,
                 Contact = new OpenApiContact()
                 {
                     Name = "Stenio Nobres",
@@ -138,6 +138,18 @@ namespace AspNetCoreWebApiLab.Api
                     Url = new Uri("https://opensource.org/licenses/MIT")
                 }
             };
+        }
+
+        private string GetApiDescriptionV1()
+        {
+            return @"Through this API you can access ASP.NET Core Identity services. 
+                     The 1.0 version has the mainly resources, authentication and authorization features.";
+        }
+
+        private string GetApiDescriptionV2()
+        {
+            return @"Through this API you can access ASP.NET Core Identity services.
+                     The 2.0 version has all features of version 1.0 plus asynchronous endpoints.";
         }
 
         private IActionResult CreateResponseFactory(ActionContext context)
