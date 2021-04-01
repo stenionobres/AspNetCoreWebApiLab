@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Http;
 using AspNetCoreWebApiLab.Api.Models.V1;
 using AspNetCoreWebApiLab.Api.Services;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V2
 {
     [ApiController]
+    [Authorize]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/roles")]
     [Consumes("application/json")]
@@ -97,6 +99,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         }
 
         [HttpDelete("{roleId}")]
+        [Authorize(Roles = "Admin, CanDeleteRoles")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -199,6 +202,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         /// <returns></returns>
         [HttpDelete]
         [Route("{roleId}/claims")]
+        [Authorize(Roles = "Admin, CanDeleteRoles")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -5,10 +5,12 @@ using AspNetCoreWebApiLab.Api.Models.V1;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.JsonPatch;
 using AspNetCoreWebApiLab.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V2
 {
     [ApiController]
+    [Authorize]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/users")]
     [Consumes("application/json")]
@@ -49,6 +51,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -72,6 +75,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -100,6 +104,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         }
 
         [HttpPatch("{userId}")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -125,6 +130,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         }
 
         [HttpDelete("{userId}")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -163,6 +169,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         /// <returns></returns>
         [HttpPost]
         [Route("{userId}/roles")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -227,6 +234,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         /// <returns></returns>
         [HttpDelete]
         [Route("{userId}/roles/{roleName}")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -253,6 +261,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         /// <returns></returns>
         [HttpPost]
         [Route("{userId}/claims")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClaimModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -317,6 +326,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         /// <returns></returns>
         [HttpDelete]
         [Route("{userId}/claims")]
+        [Authorize(Roles = "Admin, CanManageUsers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
