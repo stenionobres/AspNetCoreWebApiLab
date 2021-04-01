@@ -73,7 +73,7 @@
             <param name="claim"></param>
             <returns></returns>
         </member>
-        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.SignIn(AspNetCoreWebApiLab.Api.Models.V2.SignInModel)">
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V1.UsersController.SignIn(AspNetCoreWebApiLab.Api.Models.V1.SignInModel)">
             <summary>
             Gets JWT Token for authenticate on API
             </summary>

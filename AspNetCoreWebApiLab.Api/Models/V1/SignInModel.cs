@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreWebApiLab.Api.Models.V2
+namespace AspNetCoreWebApiLab.Api.Models.V1
 {
     public class SignInModel
     {

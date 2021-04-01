@@ -4,7 +4,6 @@ using AspNetCoreWebApiLab.Api.Models.V1;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.JsonPatch;
 using AspNetCoreWebApiLab.Api.Services;
-using AspNetCoreWebApiLab.Api.Models.V2;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V1

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
-using AspNetCoreWebApiLab.Api.Models.V2;
 using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
 
 namespace AspNetCoreWebApiLab.Api.Services
