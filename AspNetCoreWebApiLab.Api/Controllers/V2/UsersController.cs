@@ -345,6 +345,37 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
             }
         }
 
-        
+        /// <summary>
+        /// Gets JWT Token for authenticate on API
+        /// </summary>
+        /// <param name="signInModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("signin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> SignIn(SignInModel signInModel)
+        {
+            try
+            {
+                var jwtToken = await _userService.SignInAsync(signInModel);
+
+                if (string.IsNullOrEmpty(jwtToken)) return NotFound("User not found");
+
+                return Ok(new { token = jwtToken });
+            }
+            catch (System.ApplicationException ex)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, ex.Message);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
     }
 }

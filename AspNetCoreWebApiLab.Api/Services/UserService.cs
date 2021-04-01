@@ -162,5 +162,23 @@ namespace AspNetCoreWebApiLab.Api.Services
                 throw new ApplicationException("Invalid user password");
             }
         }
+
+        public async Task<string> SignInAsync(SignInModel signInModel)
+        {
+            var user = await _userManager.FindByEmailAsync(signInModel.Email);
+
+            if (user == null) return string.Empty;
+
+            var userSignInResult = await _userManager.CheckPasswordAsync(user, signInModel.Password);
+
+            if (userSignInResult)
+            {
+                return _jwtService.GenerateToken(user);
+            }
+            else
+            {
+                throw new ApplicationException("Invalid user password");
+            }
+        }
     }
 }
