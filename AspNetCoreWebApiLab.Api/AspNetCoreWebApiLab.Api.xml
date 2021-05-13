@@ -156,5 +156,81 @@
             <param name="signInModel"></param>
             <returns></returns>
         </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.RolesController.PostRoleClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
+            <summary>
+            Associates a claim with a role. If claim doesn't exists it's created with new id.
+            </summary>
+            <param name="roleId"></param>
+            <param name="claim"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.RolesController.GetRoleClaims(System.Int32)">
+            <summary>
+            Get claims associated with role.
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.RolesController.DeleteRoleClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
+            <summary>
+            Removes claim associated with role.
+            </summary>
+            <param name="roleId"></param>
+            <param name="claim"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.UsersController.PostUserRoles(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.RoleModel)">
+            <summary>
+            Associates an user with a role. If role doesn't exists it's created with new id.
+            </summary>
+            <param name="userId"></param>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.UsersController.GetUserRoles(System.Int32)">
+            <summary>
+            Get roles associated with user.
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.UsersController.DeleteUserRoles(System.Int32,System.String)">
+            <summary>
+            Removes role associated with user.
+            </summary>
+            <param name="userId"></param>
+            <param name="roleName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.UsersController.PostUserClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
+            <summary>
+            Associates an user with a claim. If claim doesn't exists it's created with new id.
+            </summary>
+            <param name="userId"></param>
+            <param name="claim"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.UsersController.GetUserClaims(System.Int32)">
+            <summary>
+            Get claims associated with user.
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.UsersController.DeleteUserClaims(System.Int32,AspNetCoreWebApiLab.Api.Models.V1.ClaimModel)">
+            <summary>
+            Removes claims associated with user.
+            </summary>
+            <param name="userId"></param>
+            <param name="claim"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AspNetCoreWebApiLab.Api.Controllers.V3.UsersController.SignIn(AspNetCoreWebApiLab.Api.Models.V1.SignInModel)">
+            <summary>
+            Gets JWT Token for authenticate on API
+            </summary>
+            <param name="signInModel"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
