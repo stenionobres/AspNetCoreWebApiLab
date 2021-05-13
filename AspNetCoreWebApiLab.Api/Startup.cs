@@ -53,6 +53,7 @@ namespace AspNetCoreWebApiLab.Api
             {
                 swaggerOptions.SwaggerDoc("IdentityAPI-V1.0", GetApiInfo(versionNumber: "1.0", GetApiDescriptionV1()));
                 swaggerOptions.SwaggerDoc("IdentityAPI-V2.0", GetApiInfo(versionNumber: "2.0", GetApiDescriptionV2()));
+                swaggerOptions.SwaggerDoc("IdentityAPI-V3.0", GetApiInfo(versionNumber: "3.0", GetApiDescriptionV3()));
 
                 var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
@@ -95,6 +96,7 @@ namespace AspNetCoreWebApiLab.Api
             {
                 c.SwaggerEndpoint("/swagger/IdentityAPI-V1.0/swagger.json", "ASP.NET Core Identity API 1.0");
                 c.SwaggerEndpoint("/swagger/IdentityAPI-V2.0/swagger.json", "ASP.NET Core Identity API 2.0");
+                c.SwaggerEndpoint("/swagger/IdentityAPI-V3.0/swagger.json", "ASP.NET Core Identity API 3.0");
                 c.RoutePrefix = string.Empty;
             });
 
@@ -150,6 +152,13 @@ namespace AspNetCoreWebApiLab.Api
         {
             return @"Through this API you can access ASP.NET Core Identity services.
                      The 2.0 version has all features of version 1.0 plus asynchronous endpoints.";
+        }
+
+        private string GetApiDescriptionV3()
+        {
+            return @"Through this API you can access ASP.NET Core Identity services.
+                     The 3.0 version has all features of version 1.0 and 2.0 plus caching, sorting, pagination,
+                     filtering and data shaping.";
         }
 
         private IActionResult CreateResponseFactory(ActionContext context)
