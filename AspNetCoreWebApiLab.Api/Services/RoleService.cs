@@ -3,16 +3,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
+using AspNetCoreWebApiLab.Persistence.Mappers;
 
 namespace AspNetCoreWebApiLab.Api.Services
 {
     public class RoleService
     {
         private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private readonly RoleDataMapper _roleDataMapper;
 
-        public RoleService(RoleManager<IdentityRole<int>> roleManager)
+        public RoleService(RoleManager<IdentityRole<int>> roleManager, RoleDataMapper roleDataMapper)
         {
             _roleManager = roleManager;
+            _roleDataMapper = roleDataMapper;
         }
 
         public RoleModel Get(int roleId)
@@ -86,6 +89,8 @@ namespace AspNetCoreWebApiLab.Api.Services
         public IdentityRole<int> GetIdentityRoleBy(int id) => _roleManager.Roles.FirstOrDefault(r => r.Id.Equals(id));
 
         public async Task<IdentityRole<int>> GetIdentityRoleAsyncBy(int id) => await _roleManager.FindByIdAsync(id.ToString());
+
+        public void CleanRolesAndRelatedData() => _roleDataMapper.CleanRolesAndRelatedData();
 
     }
 }

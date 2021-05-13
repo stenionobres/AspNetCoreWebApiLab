@@ -1,6 +1,7 @@
 using AspNetCoreWebApiLab.Api.Services;
 using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
 using AspNetCoreWebApiLab.Persistence.EntityFrameworkContexts;
+using AspNetCoreWebApiLab.Persistence.Mappers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -70,6 +71,7 @@ namespace AspNetCoreWebApiLab.Api
             services.AddTransient<RoleClaimService>();
             services.AddTransient<UserClaimService>();
             services.AddTransient<JwtService>();
+            services.AddTransient<RoleDataMapper>();
 
             services.AddDbContext<AspNetCoreWebApiLabDbContext>();
 
