@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
 using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
+using AspNetCoreWebApiLab.Persistence.Mappers;
 
 namespace AspNetCoreWebApiLab.Api.Services
 {
@@ -12,11 +13,13 @@ namespace AspNetCoreWebApiLab.Api.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly JwtService _jwtService;
+        private readonly UserDataMapper _userDataMapper;
 
-        public UserService(UserManager<User> userManager, JwtService jwtService)
+        public UserService(UserManager<User> userManager, JwtService jwtService, UserDataMapper userDataMapper)
         {
             _userManager = userManager;
             _jwtService = jwtService;
+            _userDataMapper = userDataMapper;
         }
 
         public UserModel Get(int userId)
@@ -180,5 +183,8 @@ namespace AspNetCoreWebApiLab.Api.Services
                 throw new ApplicationException("Invalid user password");
             }
         }
+
+        public void CleanUsersAndRelatedData() => _userDataMapper.CleanUsersAndRelatedData();
+
     }
 }

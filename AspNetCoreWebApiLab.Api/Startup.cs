@@ -72,6 +72,7 @@ namespace AspNetCoreWebApiLab.Api
             services.AddTransient<UserClaimService>();
             services.AddTransient<JwtService>();
             services.AddTransient<RoleDataMapper>();
+            services.AddTransient<UserDataMapper>();
 
             services.AddDbContext<AspNetCoreWebApiLabDbContext>();
 
