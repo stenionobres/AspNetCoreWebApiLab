@@ -47,6 +47,9 @@ namespace AspNetCoreWebApiLab.Api.Services
 
             var users = await Task.Run(() => _userManager.Users);
 
+            users = users.Skip(usersResourceParameters.PageSize * (usersResourceParameters.PageNumber - 1))
+                         .Take(usersResourceParameters.PageSize);
+
             if (!string.IsNullOrWhiteSpace(usersResourceParameters.OrderBy))
             {
                 users = users.ApplySort(usersResourceParameters.OrderBy);
