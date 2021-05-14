@@ -40,9 +40,22 @@ namespace AspNetCoreWebApiLab.Api.Services
 
         public async Task<IEnumerable<UserModel>> GetAsync(UsersResourceParameters usersResourceParameters)
         {
-            var users = await Task.Run(() => _userManager.Users.ToList());
+            if (usersResourceParameters == null)
+            {
+                throw new ArgumentNullException(nameof(usersResourceParameters));
+            }
 
-            return users == null || users.Count == 0 ? null :
+            var users = await Task.Run(() => _userManager.Users);
+
+            if (!string.IsNullOrWhiteSpace(usersResourceParameters.OrderBy))
+            {
+                if (usersResourceParameters.OrderBy.ToLowerInvariant() == "firstname")
+                {
+                    users = users.OrderBy(u => u.FirstName);
+                }
+            }
+
+            return users == null || users.Any() == false ? null :
                    users.Select(user => new UserModel(user));
         }
 
