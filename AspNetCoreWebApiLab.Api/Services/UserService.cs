@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
+using AspNetCoreWebApiLab.Api.Models.V3;
 using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
 using AspNetCoreWebApiLab.Persistence.Mappers;
 
@@ -50,6 +52,14 @@ namespace AspNetCoreWebApiLab.Api.Services
                 Occupation = user.Occupation,
                 Email = user.Email
             };
+        }
+
+        public async Task<IEnumerable<UserModel>> GetAsync(UsersResourceParameters usersResourceParameters)
+        {
+            var users = await Task.Run(() => _userManager.Users.ToList());
+
+            return users == null || users.Count == 0 ? null :
+            users.Select(u => new UserModel());
         }
 
         public UserModel Save(UserPostModel user)

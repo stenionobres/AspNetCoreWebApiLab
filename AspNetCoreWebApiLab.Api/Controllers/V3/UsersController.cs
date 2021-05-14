@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using AspNetCoreWebApiLab.Api.Models.V1;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.JsonPatch;
 using AspNetCoreWebApiLab.Api.Services;
+using AspNetCoreWebApiLab.Api.Models.V1;
+using AspNetCoreWebApiLab.Api.Models.V3;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V3
@@ -43,6 +45,27 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
                 if (user == null) return NotFound("User not found");
 
                 return Ok(user);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetUsers([FromQuery] UsersResourceParameters usersResourceParameters)
+        {
+            try
+            {
+                var users = await _userService.GetAsync(usersResourceParameters);
+
+                if (users == null || users.Any() == false) return NotFound("Users not found");
+
+                return Ok(users);
             }
             catch (System.Exception)
             {
