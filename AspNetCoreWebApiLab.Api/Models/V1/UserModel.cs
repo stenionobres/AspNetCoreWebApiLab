@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
 
 namespace AspNetCoreWebApiLab.Api.Models.V1
 {
@@ -22,6 +23,17 @@ namespace AspNetCoreWebApiLab.Api.Models.V1
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        public UserModel() { }
+
+        public UserModel(User user)
+        {
+            Id = user.Id;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Occupation = user.Occupation;
+            Email = user.Email;
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

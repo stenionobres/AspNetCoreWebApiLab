@@ -28,30 +28,14 @@ namespace AspNetCoreWebApiLab.Api.Services
         {
             var user = GetUserBy(userId);
 
-            return user == null ? null :
-            new UserModel()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Occupation = user.Occupation,
-                Email = user.Email
-            };
+            return user == null ? null : new UserModel(user);
         }
 
         public async Task<UserModel> GetAsync(int userId)
         {
             var user = await GetUserAsyncBy(userId);
 
-            return user == null ? null :
-            new UserModel()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Occupation = user.Occupation,
-                Email = user.Email
-            };
+            return user == null ? null : new UserModel(user);
         }
 
         public async Task<IEnumerable<UserModel>> GetAsync(UsersResourceParameters usersResourceParameters)
@@ -59,7 +43,7 @@ namespace AspNetCoreWebApiLab.Api.Services
             var users = await Task.Run(() => _userManager.Users.ToList());
 
             return users == null || users.Count == 0 ? null :
-            users.Select(u => new UserModel());
+                   users.Select(user => new UserModel(user));
         }
 
         public UserModel Save(UserPostModel user)
@@ -70,21 +54,14 @@ namespace AspNetCoreWebApiLab.Api.Services
                 LastName = user.LastName,
                 Occupation = user.Occupation,
                 Email = user.Email,
-                UserName = user.Email,
+                UserName = user.Email
             };
 
             var identityResult = _userManager.CreateAsync(identityUser, user.Password).Result;
 
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
 
-            return new UserModel()
-            {
-                Id = identityUser.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Occupation = user.Occupation,
-                Email = user.Email
-            };
+            return new UserModel(identityUser);
         }
 
         public async Task<UserModel> SaveAsync(UserPostModel user)
@@ -95,21 +72,14 @@ namespace AspNetCoreWebApiLab.Api.Services
                 LastName = user.LastName,
                 Occupation = user.Occupation,
                 Email = user.Email,
-                UserName = user.Email,
+                UserName = user.Email
             };
 
             var identityResult = await _userManager.CreateAsync(identityUser, user.Password);
 
             CustomIdentityError.CatchErrorIfNeeded(identityResult);
 
-            return new UserModel()
-            {
-                Id = identityUser.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Occupation = user.Occupation,
-                Email = user.Email
-            };
+            return new UserModel(identityUser);
         }
 
         public void Update(int userSavedId, UserModel user)
