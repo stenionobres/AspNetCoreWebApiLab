@@ -47,16 +47,16 @@ namespace AspNetCoreWebApiLab.Api.Services
 
             var users = await Task.Run(() => _userManager.Users);
 
-            users = users.Skip(usersResourceParameters.PageSize * (usersResourceParameters.PageNumber - 1))
-                         .Take(usersResourceParameters.PageSize);
-
             if (!string.IsNullOrWhiteSpace(usersResourceParameters.OrderBy))
             {
                 users = users.ApplySort(usersResourceParameters.OrderBy);
             }
 
+            var userPagedList = PagedList<User>.Create(users, usersResourceParameters.PageNumber, usersResourceParameters.PageSize);
+
             return users == null || users.Any() == false ? null :
-                   users.Select(user => new UserModel(user));
+                   userPagedList.Select(user => new UserModel(user));
+
         }
 
         public UserModel Save(UserPostModel user)
