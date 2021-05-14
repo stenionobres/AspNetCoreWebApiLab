@@ -8,6 +8,7 @@ using AspNetCoreWebApiLab.Api.Services;
 using AspNetCoreWebApiLab.Api.Models.V1;
 using AspNetCoreWebApiLab.Api.Models.V3;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq.Dynamic.Core.Exceptions;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V3
 {
@@ -66,6 +67,10 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
                 if (users == null || users.Any() == false) return NotFound("Users not found");
 
                 return Ok(users);
+            }
+            catch (ParseException pEx)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, pEx.Message);
             }
             catch (System.Exception)
             {

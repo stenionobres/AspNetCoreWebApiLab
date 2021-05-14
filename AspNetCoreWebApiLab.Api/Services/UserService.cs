@@ -49,10 +49,7 @@ namespace AspNetCoreWebApiLab.Api.Services
 
             if (!string.IsNullOrWhiteSpace(usersResourceParameters.OrderBy))
             {
-                if (usersResourceParameters.OrderBy.ToLowerInvariant() == "firstname")
-                {
-                    users = users.OrderBy(u => u.FirstName);
-                }
+                users = users.ApplySort(usersResourceParameters.OrderBy);
             }
 
             return users == null || users.Any() == false ? null :
