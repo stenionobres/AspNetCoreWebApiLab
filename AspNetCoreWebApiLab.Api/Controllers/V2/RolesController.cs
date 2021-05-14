@@ -29,6 +29,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [HttpGet("{roleId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetRoles(int roleId)
@@ -50,6 +51,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> PostRoles(RoleModel role)
@@ -73,6 +75,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RoleModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -102,6 +105,8 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [Authorize(Roles = "Admin, CanDeleteRoles")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteRoles(int roleId)
@@ -124,6 +129,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
 
         [HttpOptions]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult OptionsRoles()
         {
             Response.Headers.Add("Allow", "GET,POST,PUT,DELETE");
@@ -140,6 +146,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [Route("{roleId}/claims")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ClaimModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -174,6 +181,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [Route("{roleId}/claims")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClaimModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetRoleClaims(int roleId)
@@ -205,6 +213,8 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
         [Authorize(Roles = "Admin, CanDeleteRoles")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteRoleClaims(int roleId, ClaimModel claim)
