@@ -38,7 +38,7 @@ namespace AspNetCoreWebApiLab.Api.Services
             return user == null ? null : new UserModel(user);
         }
 
-        public async Task<IEnumerable<UserModel>> GetAsync(UsersResourceParameters usersResourceParameters)
+        public async Task<PagedList<User>> GetAsync(UsersResourceParameters usersResourceParameters)
         {
             if (usersResourceParameters == null)
             {
@@ -54,9 +54,7 @@ namespace AspNetCoreWebApiLab.Api.Services
 
             var userPagedList = PagedList<User>.Create(users, usersResourceParameters.PageNumber, usersResourceParameters.PageSize);
 
-            return users == null || users.Any() == false ? null :
-                   userPagedList.Select(user => new UserModel(user));
-
+            return userPagedList;
         }
 
         public UserModel Save(UserPostModel user)

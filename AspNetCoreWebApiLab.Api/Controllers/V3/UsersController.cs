@@ -55,7 +55,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserPaginationMetadata))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -64,11 +64,22 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
         {
             try
             {
-                var users = await _userService.GetAsync(usersResourceParameters);
+                var userPagedList = await _userService.GetAsync(usersResourceParameters);
 
-                if (users == null || users.Any() == false) return NotFound("Users not found");
+                if (userPagedList == null || userPagedList.Any() == false) return NotFound("Users not found");
 
-                return Ok(users);
+                var userPaginationMetadata = new UserPaginationMetadata()
+                {
+                    TotalCount = userPagedList.TotalCount,
+                    PageSize = userPagedList.PageSize,
+                    CurrentPage = userPagedList.CurrentPage,
+                    TotalPages = userPagedList.TotalPages,
+                    PreviousPageLink = "",
+                    NextPageLink = "",
+                    Users = userPagedList.Select(user => new UserModel(user))
+                };
+
+                return Ok(userPaginationMetadata);
             }
             catch (ParseException pEx)
             {
