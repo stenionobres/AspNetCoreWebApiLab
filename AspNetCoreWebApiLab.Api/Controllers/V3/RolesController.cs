@@ -60,7 +60,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
             {
                 await _roleService.SaveAsync(role);
 
-                return Created($"/api/roles/{role.Id}", role);
+                return Created($"/api/v3/roles/{role.Id}", role);
             }
             catch (System.ApplicationException ex)
             {
@@ -160,7 +160,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
 
                 await _roleClaimService.AssociateAsync(role.Id, claim);
 
-                return Created($"/api/roles/{roleId}/claims", claim);
+                return Created($"/api/v3/roles/{roleId}/claims", claim);
             }
             catch (System.ApplicationException ex)
             {

@@ -59,7 +59,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             {
                 _roleService.Save(role);
 
-                return Created($"/api/roles/{role.Id}", role);
+                return Created($"/api/v1/roles/{role.Id}", role);
             }
             catch (System.ApplicationException ex)
             {
@@ -159,7 +159,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 _roleClaimService.Associate(role.Id, claim);
 
-                return Created($"/api/roles/{roleId}/claims", claim);
+                return Created($"/api/v1/roles/{roleId}/claims", claim);
             }
             catch (System.ApplicationException ex)
             {
