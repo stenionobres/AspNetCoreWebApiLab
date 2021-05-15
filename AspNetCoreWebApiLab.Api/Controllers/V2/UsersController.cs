@@ -65,7 +65,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
             {
                 var userCreated = await _userService.SaveAsync(user);
 
-                return Created($"/api/users/{user.Id}", userCreated);
+                return Created($"/api/v2/users/{user.Id}", userCreated);
             }
             catch (System.ApplicationException ex)
             {
@@ -197,7 +197,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
 
                 await _userRoleService.AssociateAsync(userId, role);
 
-                return Created($"/api/users/{userId}/roles", role);
+                return Created($"/api/v2/users/{userId}/roles", role);
             }
             catch (System.ApplicationException ex)
             {
@@ -294,7 +294,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V2
 
                 await _userClaimService.AssociateAsync(userId, claim);
 
-                return Created($"/api/users/{userId}/claims", claim);
+                return Created($"/api/v2/users/{userId}/claims", claim);
             }
             catch (System.ApplicationException ex)
             {

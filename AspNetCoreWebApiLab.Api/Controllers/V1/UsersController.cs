@@ -64,7 +64,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
             {
                 var userCreated = _userService.Save(user);
 
-                return Created($"/api/users/{user.Id}", userCreated);
+                return Created($"/api/v1/users/{user.Id}", userCreated);
             }
             catch (System.ApplicationException ex)
             {
@@ -196,7 +196,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 _userRoleService.Associate(userId, role);
 
-                return Created($"/api/users/{userId}/roles", role);
+                return Created($"/api/v1/users/{userId}/roles", role);
             }
             catch (System.ApplicationException ex)
             {
@@ -293,7 +293,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V1
 
                 _userClaimService.Associate(userId, claim);
 
-                return Created($"/api/users/{userId}/claims", claim);
+                return Created($"/api/v1/users/{userId}/claims", claim);
             }
             catch (System.ApplicationException ex)
             {
