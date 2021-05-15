@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using AspNetCoreWebApiLab.Api.Tools;
 using Microsoft.AspNetCore.JsonPatch;
 using AspNetCoreWebApiLab.Api.Services;
 using AspNetCoreWebApiLab.Api.Models.V1;
@@ -54,7 +55,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
             }
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetUsers")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserPaginationMetadata))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -68,14 +69,16 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
 
                 if (userPagedList == null || userPagedList.Any() == false) return NotFound("Users not found");
 
+                var usersResourceURI = new UsersResourceURI(Url, usersResourceParameters, userPagedList.HasPrevious, userPagedList.HasNext);
+
                 var userPaginationMetadata = new UserPaginationMetadata()
                 {
                     TotalCount = userPagedList.TotalCount,
                     PageSize = userPagedList.PageSize,
                     CurrentPage = userPagedList.CurrentPage,
                     TotalPages = userPagedList.TotalPages,
-                    PreviousPageLink = "",
-                    NextPageLink = "",
+                    PreviousPageLink = usersResourceURI.PreviousPageLink,
+                    NextPageLink = usersResourceURI.NextPageLink,
                     Users = userPagedList.Select(user => new UserModel(user))
                 };
 
