@@ -8,6 +8,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.SeedDatabase
 {
     [ApiController]
     [Route("api/seeddatabase")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class SeedDatabaseController : ControllerBase
     {
         private readonly RoleService _roleService;
