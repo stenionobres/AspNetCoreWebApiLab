@@ -79,6 +79,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
                     TotalPages = userPagedList.TotalPages,
                     PreviousPageLink = usersResourceURI.PreviousPageLink,
                     NextPageLink = usersResourceURI.NextPageLink,
+                    OrderBy = usersResourceParameters.OrderBy,
                     Users = userPagedList.Select(user => new UserModel(user))
                 };
 

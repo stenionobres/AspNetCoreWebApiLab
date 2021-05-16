@@ -11,6 +11,7 @@ namespace AspNetCoreWebApiLab.Api.Models.V3
         public int TotalPages { get; set; }
         public string PreviousPageLink { get; set; }
         public string NextPageLink { get; set; }
+        public string OrderBy { get; set; }
         public IEnumerable<UserModel> Users { get; set; }
 
     }
