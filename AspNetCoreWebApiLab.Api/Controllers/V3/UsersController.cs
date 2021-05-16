@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +71,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
                 if (userPagedList == null || userPagedList.Any() == false) return NotFound("Users not found");
 
                 var usersResourceURI = new UsersResourceURI(Url, usersResourceParameters, userPagedList.HasPrevious, userPagedList.HasNext);
+                var users = userPagedList.Select(user => new UserModel(user)).ShapeData(usersResourceParameters.Fields);
 
                 var userPaginationMetadata = new UserPaginationMetadata()
                 {
@@ -80,7 +82,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
                     PreviousPageLink = usersResourceURI.PreviousPageLink,
                     NextPageLink = usersResourceURI.NextPageLink,
                     OrderBy = usersResourceParameters.OrderBy,
-                    Users = userPagedList.Select(user => new UserModel(user))
+                    Users = users
                 };
 
                 return Ok(userPaginationMetadata);
@@ -89,7 +91,11 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
             {
                 return StatusCode(StatusCodes.Status400BadRequest, pEx.Message);
             }
-            catch (System.Exception)
+            catch (ApplicationException apEx)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, apEx.Message);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
             }

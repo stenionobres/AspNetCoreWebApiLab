@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using AspNetCoreWebApiLab.Api.Models.V1;
+﻿using System.Dynamic;
+using System.Collections.Generic;
 
 namespace AspNetCoreWebApiLab.Api.Models.V3
 {
@@ -12,7 +12,7 @@ namespace AspNetCoreWebApiLab.Api.Models.V3
         public string PreviousPageLink { get; set; }
         public string NextPageLink { get; set; }
         public string OrderBy { get; set; }
-        public IEnumerable<UserModel> Users { get; set; }
+        public IEnumerable<ExpandoObject> Users { get; set; }
 
     }
 }
