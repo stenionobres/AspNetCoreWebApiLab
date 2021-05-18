@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using AspNetCoreWebApiLab.Api.Models.V1;
-using AspNetCoreWebApiLab.Api.Services;
 using System.Collections.Generic;
+using AspNetCoreWebApiLab.Api.Services;
+using AspNetCoreWebApiLab.Api.Models.V1;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V3
@@ -41,6 +42,28 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
                 if (role == null) return NotFound("Role not found");
 
                 return Ok(role);
+            }
+            catch (System.Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RoleModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetRoles()
+        {
+            try
+            {
+                var roles = await _roleService.GetAsync();
+
+                if (roles == null || roles.Count() == 0) return NotFound("Roles not found");
+
+                return Ok(roles);
             }
             catch (System.Exception)
             {

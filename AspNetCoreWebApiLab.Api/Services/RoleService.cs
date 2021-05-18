@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreWebApiLab.Api.Tools;
 using AspNetCoreWebApiLab.Api.Models.V1;
@@ -30,6 +31,13 @@ namespace AspNetCoreWebApiLab.Api.Services
             var role = await GetIdentityRoleAsyncBy(roleId);
 
             return role == null ? null : new RoleModel() { Id = role.Id, Description = role.Name };
+        }
+
+        public async Task<IEnumerable<RoleModel>> GetAsync()
+        {
+            var roles = await Task.Run(() => _roleManager.Roles);
+
+            return roles.Select(r => new RoleModel() { Id = r.Id, Description = r.Name });
         }
 
         public void Save(RoleModel role)
