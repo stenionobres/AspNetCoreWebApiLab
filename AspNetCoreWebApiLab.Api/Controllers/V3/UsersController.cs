@@ -95,7 +95,7 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
             {
                 return StatusCode(StatusCodes.Status400BadRequest, apEx.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "A server error has occurred");
             }
