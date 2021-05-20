@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using AspNetCoreWebApiLab.Api.Services;
 using AspNetCoreWebApiLab.Persistence.DataTransferObjects;
 using AspNetCoreWebApiLab.Persistence.EntityFrameworkContexts;
@@ -65,6 +66,9 @@ namespace AspNetCoreWebApiLab.Api
                 swaggerOptions.AddSecurityRequirement(GetOpenApiSecurityRequirement());
             });
 
+            services.AddMemoryCache();
+            services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting"));
+
             services.AddTransient<UserService>();
             services.AddTransient<RoleService>();
             services.AddTransient<UserRoleService>();
@@ -73,6 +77,10 @@ namespace AspNetCoreWebApiLab.Api
             services.AddTransient<JwtService>();
             services.AddTransient<RoleDataMapper>();
             services.AddTransient<UserDataMapper>();
+
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 
             services.AddDbContext<AspNetCoreWebApiLabDbContext>();
 
@@ -102,6 +110,8 @@ namespace AspNetCoreWebApiLab.Api
                 c.SwaggerEndpoint("/swagger/IdentityAPI-V3.0/swagger.json", "ASP.NET Core Identity API 3.0");
                 c.RoutePrefix = string.Empty;
             });
+
+            app.UseIpRateLimiting();
 
             app.UseRouting();
 
