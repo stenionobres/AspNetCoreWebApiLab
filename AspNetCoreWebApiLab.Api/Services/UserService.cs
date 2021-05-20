@@ -47,6 +47,11 @@ namespace AspNetCoreWebApiLab.Api.Services
 
             var users = await Task.Run(() => _userManager.Users);
 
+            if (!string.IsNullOrWhiteSpace(usersResourceParameters.Filter))
+            {
+                users = users.ApplyFiltering(usersResourceParameters.Filter);
+            }
+
             if (!string.IsNullOrWhiteSpace(usersResourceParameters.OrderBy))
             {
                 users = users.ApplySort(usersResourceParameters.OrderBy);

@@ -16,5 +16,6 @@ namespace AspNetCoreWebApiLab.Api.Models.V3
 
         public string OrderBy { get; set; } = "FirstName";
         public string Fields { get; set; }
+        public string Filter { get; set; }
     }
 }

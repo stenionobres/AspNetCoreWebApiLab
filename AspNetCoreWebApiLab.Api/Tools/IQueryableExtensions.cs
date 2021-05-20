@@ -38,5 +38,40 @@ namespace AspNetCoreWebApiLab.Api.Tools
 
             return source.OrderBy(orderByString);
         }
+
+        public static IQueryable<T> ApplyFiltering<T>(this IQueryable<T> source, string filter)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (string.IsNullOrWhiteSpace(filter))
+            {
+                return source;
+            }
+
+            var filterAfterSplit = filter.Split(",");
+            var filterString = string.Empty;
+            var filterParams = new string[filterAfterSplit.Length];
+            var parameterIndex = 0;
+
+            foreach (var filterClause in filterAfterSplit)
+            {
+                var trimmedFilterClause = filterClause.Trim();
+                var parametersSplitedByEqual = trimmedFilterClause.Split("=");
+                var propertyName = parametersSplitedByEqual[0].Trim();
+                var filterPart = $"{propertyName} = @{parameterIndex}";
+
+                filterString += parameterIndex < filterAfterSplit.Length - 1 
+                                ? $"{filterPart} and "
+                                : $"{filterPart}";
+
+                filterParams[parameterIndex] = parametersSplitedByEqual[1].Trim();
+                parameterIndex++;
+            }
+
+            return source.Where(filterString, filterParams);
+        }
     }
 }
