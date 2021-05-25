@@ -11,6 +11,7 @@ using AspNetCoreWebApiLab.Api.Models.V1;
 using AspNetCoreWebApiLab.Api.Models.V3;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq.Dynamic.Core.Exceptions;
+using Endpoint = AspNetCoreWebApiLab.Api.Models.V3.Endpoint;
 
 namespace AspNetCoreWebApiLab.Api.Controllers.V3
 {
@@ -26,6 +27,8 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
         private readonly UserService _userService;
         private readonly UserRoleService _userRoleService;
         private readonly UserClaimService _userClaimService;
+        private HostString Host => Request.Host;
+        private string Version => "v3";
 
         public UsersController(UserService userService, UserRoleService userRoleService, UserClaimService userClaimService)
         {
@@ -115,7 +118,13 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
             {
                 var userCreated = await _userService.SaveAsync(user);
 
-                return Created($"/api/v3/users/{user.Id}", userCreated);
+                var endpoints = new List<Endpoint>()
+                {
+                    new Endpoint($"{Host}/api/{Version}/users/{userCreated.Id}/roles", "add_role_to_user", "POST"),
+                    new Endpoint($"{Host}/api/{Version}/users/{userCreated.Id}/claims", "add_claim_to_user", "POST"),
+                };
+
+                return Created($"/api/v3/users/{user.Id}", new { user = userCreated, links = endpoints });
             }
             catch (System.ApplicationException ex)
             {
@@ -436,7 +445,14 @@ namespace AspNetCoreWebApiLab.Api.Controllers.V3
 
                 if (string.IsNullOrEmpty(jwtToken)) return NotFound("User not found");
 
-                return Ok(new { token = jwtToken });
+                var endpoints = new List<Endpoint>()
+                {
+                    new Endpoint($"{Host}/api/{Version}/users", "create_user", "POST"),
+                    new Endpoint($"{Host}/api/{Version}/users/id", "get_user", "GET"),
+                    new Endpoint($"{Host}/api/{Version}/users", "update_all_user", "PUT")
+                };
+
+                return Ok(new { token = jwtToken, links = endpoints });
             }
             catch (System.ApplicationException ex)
             {
