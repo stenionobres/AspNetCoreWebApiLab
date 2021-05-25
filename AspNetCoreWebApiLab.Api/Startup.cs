@@ -170,8 +170,8 @@ namespace AspNetCoreWebApiLab.Api
         private string GetApiDescriptionV3()
         {
             return @"Through this API you can access ASP.NET Core Identity services.
-                     The 3.0 version has all features of version 1.0 and 2.0 plus caching, sorting, pagination,
-                     filtering and data shaping.";
+                     The 3.0 version has all features of version 1.0 and 2.0 plus sorting, pagination,
+                     filtering, data shaping and hateoas.";
         }
 
         private IActionResult CreateResponseFactory(ActionContext context)
