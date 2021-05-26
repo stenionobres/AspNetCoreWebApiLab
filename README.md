@@ -33,6 +33,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [JWT and Swagger](#jwt-and-swagger)
     * [Authorization](#authorization)
 * [Caching](#caching)
+* [Sorting](#sorting)
 * [References used](#references-used)
 * [Authors](#authors)
 
@@ -436,6 +437,14 @@ public class CacheController : ControllerBase
     }
 }
 ```
+
+## Sorting
+
+Sorting is an important feature for any API endpoint that returns a lot of data. Sorting allows you to order the results by any field, in ascending or descending order.
+
+This project implements a basic example of sorting. The parameters are sent by query string.
+
+The `OrderBy` parameter from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [UserService](./AspNetCoreWebApiLab.Api/Services/UserService.cs) and [IQueryableExtensions](./AspNetCoreWebApiLab.Api/Tools/IQueryableExtensions.cs) classes to **apply sorting on Users API version 3**.
 
 ## References used
 
