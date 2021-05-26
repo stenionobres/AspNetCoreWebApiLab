@@ -34,7 +34,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [Authorization](#authorization)
 * [Caching](#caching)
 * [Sorting](#sorting)
-* [Searching/Filtering](#searching/filtering)
+* [Searching/Filtering](#searchingfiltering)
 * [References used](#references-used)
 * [Authors](#authors)
 
