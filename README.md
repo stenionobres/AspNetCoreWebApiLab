@@ -32,6 +32,7 @@ After the case studies, the main conclusions were documented in this file and se
     * [Authentication](#authentication)
     * [JWT and Swagger](#jwt-and-swagger)
     * [Authorization](#authorization)
+* [Caching](#caching)
 * [References used](#references-used)
 * [Authors](#authors)
 
@@ -359,6 +360,82 @@ swaggerOptions.AddSecurityRequirement(GetOpenApiSecurityRequirement());
 Authorization is a process that answer the question, **What can you do in the application?** The use of `[Authorize]` attribute allows to restrict wich actions the user of API can do.
 
 Some roles was defined with Authorize attribute and [JwtService](./AspNetCoreWebApiLab.Api/Services/JwtService.cs) uses that roles to make the access token, so only tokens with that roles can request the endpoints. More details about how authorization works on ASP.NET Core can be accessed [here](https://github.com/stenionobres/AspNetCoreIdentityLab#authorizing-a-user).
+
+## Caching
+
+Caching is the ability to store copies of frequently accessed data in several places along the request-response path. When a consumer requests a resource representation, the request goes through a cache or a series of caches.
+
+Optimizing the network using caching improves the overall quality-of-service in the following ways:
+
+* Reduce bandwidth;
+* Reduce latency;
+* Reduce load on servers;
+* Hide network failures;
+
+**Being cacheable** is one of architectural constraints of REST.
+
+The ASP.NET Core Web API has the `Response Caching Middleware` that's can be used for implements caching on APIs REST. Follow the steps to add caching on ASP.NET Core project:
+
+``` C#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddResponseCaching();
+    // other lines codes
+}
+
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseResponseCaching();
+    app.UseEndpoints();
+    // other lines codes
+}
+```
+
+It's important to highlight that `app.UseResponseCaching();` must be added before the configuration `app.UseEndpoints();`.
+
+After that the `ResponseCache` attribute can be used on controllers. The `Duration` parameter value is configured in seconds. The ResponseCache attribute can be used both in the controller and in the action.
+
+``` C#
+[ApiController]
+public class CacheController : ControllerBase
+{
+    [HttpGet]
+    [ResponseCache(Duration = 120)]
+    public IActionResult GetValues()
+    {
+        var values = new List<int>(){ 1, 2, 3, 4 };
+
+        return Ok(values);
+    }
+}
+```
+
+It's possible to create a configuration profiles for caches. These profiles allow reuses of configurations between controllers:
+
+``` C#
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddResponseCaching();
+    services.AddControllers(setupAction => 
+    {
+        setupAction.CacheProfiles.Add("MyProfileCache", new CacheProfile() { Duration = 120 });
+    });
+    // other lines codes
+}
+
+[ApiController]
+public class CacheController : ControllerBase
+{
+    [HttpGet]
+    [ResponseCache(Duration = 120, CacheProfileName = "MyProfileCache")]
+    public IActionResult GetValues()
+    {
+        var values = new List<int>(){ 1, 2, 3, 4 };
+
+        return Ok(values);
+    }
+}
+```
 
 ## References used
 
