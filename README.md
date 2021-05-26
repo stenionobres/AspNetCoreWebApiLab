@@ -84,6 +84,8 @@ The solution `AspNetCoreWebApiLab` is divided into three projects: `AspNetCoreWe
 
 >[RestSharp 106.11.7](https://www.nuget.org/packages/RestSharp/106.11.7)
 
+>[System.Linq.Dynamic.Core 1.2.9](https://www.nuget.org/packages/System.Linq.Dynamic.Core/1.2.9)
+
 ### AspNetCoreWebApiLab-Api
 
 ### AspNetCoreWebApiLab-ApiClient
@@ -445,6 +447,8 @@ Sorting is an important feature for any API endpoint that returns a lot of data.
 This project implements a basic example of sorting. The parameters are sent by query string.
 
 The `OrderBy` parameter from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [UserService](./AspNetCoreWebApiLab.Api/Services/UserService.cs) and [IQueryableExtensions](./AspNetCoreWebApiLab.Api/Tools/IQueryableExtensions.cs) classes to **apply sorting on Users API version 3**.
+
+The application splits the OrderBy parameter fields and apply the sorting using the [System.Linq.Dynamic.Core](https://www.nuget.org/packages/System.Linq.Dynamic.Core) package.
 
 ## References used
 
