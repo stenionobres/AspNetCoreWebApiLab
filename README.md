@@ -35,6 +35,7 @@ After the case studies, the main conclusions were documented in this file and se
 * [Caching](#caching)
 * [Sorting](#sorting)
 * [Searching/Filtering](#searchingfiltering)
+* [Data Shaping](#data-shaping)
 * [References used](#references-used)
 * [Authors](#authors)
 
@@ -458,6 +459,14 @@ Filtering is the application of a boolean condition against a collection of reso
 This project implements a basic example of searching/filtering. The parameters are sent by query string.
 
 The `Filter` parameter from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [UserService](./AspNetCoreWebApiLab.Api/Services/UserService.cs) and [IQueryableExtensions](./AspNetCoreWebApiLab.Api/Tools/IQueryableExtensions.cs) classes to **apply searching/filtering on Users API version 3**.
+
+## Data Shaping
+
+Data shaping is a simple technic for minimizing traffic travelling from client of web API to server. Depending on a scenario client might not be interested in receiving all fields that comprise data object. It enables the consumer of the API to select (shape) the data by choosing the fields through the query string.
+
+This project implements a basic example of **data shaping**. The parameters are sent by query string.
+
+The `Fields` parameter from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [IEnumerableExtensions](./AspNetCoreWebApiLab.Api/Tools/IEnumerableExtensions.cs) classes to **apply data shaping on Users API version 3**.
 
 ## References used
 
