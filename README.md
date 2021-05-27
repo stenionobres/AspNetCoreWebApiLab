@@ -37,6 +37,7 @@ After the case studies, the main conclusions were documented in this file and se
 * [Searching/Filtering](#searchingfiltering)
 * [Data Shaping](#data-shaping)
 * [Pagination](#pagination)
+* [Throttling/Rate Limiting](#throttlingrate-limiting)
 * [References used](#references-used)
 * [Authors](#authors)
 
@@ -88,6 +89,8 @@ The solution `AspNetCoreWebApiLab` is divided into three projects: `AspNetCoreWe
 >[RestSharp 106.11.7](https://www.nuget.org/packages/RestSharp/106.11.7)
 
 >[System.Linq.Dynamic.Core 1.2.9](https://www.nuget.org/packages/System.Linq.Dynamic.Core/1.2.9)
+
+>[AspNetCoreRateLimit 3.2.2](https://www.nuget.org/packages/AspNetCoreRateLimit/3.2.2)
 
 ### AspNetCoreWebApiLab-Api
 
@@ -478,6 +481,53 @@ Moreover, every client has limited memory resources and it needs to restrict the
 This project implements a basic example of **pagination**. The parameters are sent by query string.
 
 The `PageNumber` and `PageSize` parameters from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [PagedList](./AspNetCoreWebApiLab.Api/Tools/PagedList.cs) and [UsersResourceURI](./AspNetCoreWebApiLab.Api/Tools/UsersResourceURI.cs) classes to **apply pagination on Users API version 3**.
+
+## Throttling/Rate Limiting
+
+Throttling or Rate Limiting enforces a limit on the number of API calls coming from an IP address over some time. Rate limiting is a critical component of an API product’s scalability. Performance isn’t the only reason to limit API requests, Rate limiting is an essential component of Internet security, as DoS attacks can tank a server with unlimited API requests.
+
+In this application was used the [AspNetCoreRateLimit](https://www.nuget.org/packages/AspNetCoreRateLimit) package for rate limiting implementation. Below are listed the configuration needed to use this package.
+
+First the configuration below must be added on [appsettings.json](./AspNetCoreWebApiLab.Api/appsettings.json) file. It's important to say that the configuration below is made to GET verb on version 3 of Roles API. The requests are limited by 2 calls per minute. If occurs more requests than allowed the 429 - Too many requests status code is returned.
+
+``` JSON
+"IpRateLimiting": {
+    "EnableEndpointRateLimiting": true,
+    "StackBlockedRequests": false,
+    "RealIpHeader": "X-Real-IP",
+    "HttpStatusCode": 429,
+    "GeneralRules": [
+      {
+        "Endpoint": "get:/api/v3/roles",
+        "Period": "1m",
+        "Limit": 2
+      }
+    ]
+}
+```
+
+After that some lines codes need be added on [Startup](./AspNetCoreWebApiLab.Api/Startup.cs) class. For more information about configuration or how to use the package the [AspNetCoreRateLimit's github](https://github.com/stefanprodan/AspNetCoreRateLimit) can be consulted.
+
+``` C#
+using AspNetCoreRateLimit;
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMemoryCache();
+    services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting"));
+
+    services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+    services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+    services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+    // other lines codes
+}
+
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseIpRateLimiting();
+    // other lines codes
+}
+```
 
 ## References used
 
