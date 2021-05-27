@@ -488,7 +488,7 @@ Throttling or Rate Limiting enforces a limit on the number of API calls coming f
 
 In this application was used the [AspNetCoreRateLimit](https://www.nuget.org/packages/AspNetCoreRateLimit) package for rate limiting implementation. Below are listed the configuration needed to use this package.
 
-First the configuration below must be added on [appsettings.json](./AspNetCoreWebApiLab.Api/appsettings.json) file. It's important to say that the configuration below is made to GET verb on version 3 of Roles API. The requests are limited by 2 calls per minute. If occurs more requests than allowed the 429 - Too many requests status code is returned.
+First the configuration below must be added on [appsettings.json](./AspNetCoreWebApiLab.Api/appsettings.json) file. It's important to say that the configuration below is made to **GET verb on version 3 of Roles API**. The requests are **limited by 2 calls per minute**. If occurs more requests than allowed the **429 - Too many requests** status code is returned.
 
 ``` JSON
 "IpRateLimiting": {
