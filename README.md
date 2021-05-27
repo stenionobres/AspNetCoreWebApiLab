@@ -446,7 +446,7 @@ public class CacheController : ControllerBase
 
 Sorting is an important feature for any API endpoint that returns a lot of data. Sorting allows you to order the results by any field, in ascending or descending order.
 
-This project implements a basic example of sorting. The parameters are sent by query string.
+This project implements a basic example of **sorting**. The parameters are sent by query string.
 
 The `OrderBy` parameter from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [UserService](./AspNetCoreWebApiLab.Api/Services/UserService.cs) and [IQueryableExtensions](./AspNetCoreWebApiLab.Api/Tools/IQueryableExtensions.cs) classes to **apply sorting on Users API version 3**.
 
@@ -456,7 +456,7 @@ The application splits the OrderBy parameter fields and apply the sorting using 
 
 Filtering is the application of a boolean condition against a collection of resources in order to subset the collection to ony those resources for which the condition is true. For those familiar with SQL, filtering is analogous to a SQL query with a WHERE clause. This [article](https://developer.sas.com/reference/filtering/) presents a good content about rest apis searching/filtering.
 
-This project implements a basic example of searching/filtering. The parameters are sent by query string.
+This project implements a basic example of **searching/filtering**. The parameters are sent by query string.
 
 The `Filter` parameter from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [UserService](./AspNetCoreWebApiLab.Api/Services/UserService.cs) and [IQueryableExtensions](./AspNetCoreWebApiLab.Api/Tools/IQueryableExtensions.cs) classes to **apply searching/filtering on Users API version 3**.
 
