@@ -36,6 +36,7 @@ After the case studies, the main conclusions were documented in this file and se
 * [Sorting](#sorting)
 * [Searching/Filtering](#searchingfiltering)
 * [Data Shaping](#data-shaping)
+* [Pagination](#pagination)
 * [References used](#references-used)
 * [Authors](#authors)
 
@@ -467,6 +468,16 @@ Data shaping is a simple technic for minimizing traffic travelling from client o
 This project implements a basic example of **data shaping**. The parameters are sent by query string.
 
 The `Fields` parameter from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [IEnumerableExtensions](./AspNetCoreWebApiLab.Api/Tools/IEnumerableExtensions.cs) classes to **apply data shaping on Users API version 3**.
+
+## Pagination
+
+Pagination refers to getting partial results from an API. Imagine having millions of results in the database and having your application try to return all of them at once. This scenario causes extraneous network traffic.
+
+Moreover, every client has limited memory resources and it needs to restrict the number of shown results. Thus, we need a way to return a set number of results to the client in order to avoid these consequences.
+
+This project implements a basic example of **pagination**. The parameters are sent by query string.
+
+The `PageNumber` and `PageSize` parameters from [UsersResourceParameters](./AspNetCoreWebApiLab.Api/Models/V3/UsersResourceParameters.cs) class model is used in [PagedList](./AspNetCoreWebApiLab.Api/Tools/PagedList.cs) and [UsersResourceURI](./AspNetCoreWebApiLab.Api/Tools/UsersResourceURI.cs) classes to **apply pagination on Users API version 3**.
 
 ## References used
 
