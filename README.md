@@ -153,7 +153,7 @@ This [controller](./AspNetCoreWebApiLab.Api/Controllers/Experiments/ResourcesCon
 
 HATEOAS (Hypermedia as the Engine of Application State) is a constraint of the REST application architecture. The term “hypermedia” refers to any content that contains links to other forms of media such as images, movies, and text.
 
-REST architectural style lets us use the hypermedia links in the response contents. It allows the client can dynamically navigate to the appropriate resources by traversing the hypermedia links. Below is shown an example:
+REST architectural style lets us use the hypermedia links in the response contents. It allows the client can dynamically navigate to the appropriate resources by traversing the hypermedia links. HATEOAS helps with evolvability and self descriptiveness and drives how to use and consume the API. Below is shown an example:
 
 ``` JSON
 HTTP/1.1 200 OK
@@ -171,6 +171,60 @@ Content-Length: ...
             "deposit": "/accounts/12345/deposit"
         }
     }
+}
+```
+
+In this application the [HateoasController](./AspNetCoreWebApiLab.Api/Controllers/V3/HateoasController.cs) lists some of the api services. A response example is listed below:
+
+
+``` JSON
+Accept: application/json
+Content-Type: application/json
+GET https://domain.com/api/v3
+[
+  {
+    "hRef": "domain.com/api/v3",
+    "rel": "self",
+    "method": "GET"
+  },
+  {
+    "hRef": "domain.com/api/v3/users",
+    "rel": "create_user",
+    "method": "POST"
+  },
+  {
+    "hRef": "domain.com/api/v3/users/signin",
+    "rel": "signin_user",
+    "method": "POST"
+  }
+]
+```
+
+The [UsersController](./AspNetCoreWebApiLab.Api/Controllers/V3/UsersController.cs) presents an example of HATEOAS in a endpoint POST /api/v3/users/signin.
+
+``` JSON
+Accept: application/json
+Content-Type: application/json
+POST https://domain.com/api/v3/users/signin
+{
+    "token": "jwt token",
+    "links": [
+        {
+            "hRef": "domain.com/api/v3/users",
+            "rel": "create_user",
+            "method": "POST"
+        },
+        {
+            "hRef": "domain.com/api/v3/users/id",
+            "rel": "get_user",
+            "method": "GET"
+        },
+        {
+            "hRef": "domain.com/api/v3/users",
+            "rel": "update_all_user",
+            "method": "PUT"
+        }
+    ]
 }
 ```
 
