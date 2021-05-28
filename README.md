@@ -8,7 +8,7 @@ In this application, several real usage scenarios were tested based on a mini ap
 
 After the case studies, the main conclusions were documented in this file and serve as a reference for use and source of consultation.
 
-![](./readme-pictures/aspnetcore-webapi.gif)
+![](./readme-pictures/aspnetcore-webapilab.gif)
 
 ## Table of contents
 
