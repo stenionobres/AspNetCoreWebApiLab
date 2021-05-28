@@ -94,9 +94,51 @@ The solution `AspNetCoreWebApiLab` is divided into three projects: `AspNetCoreWe
 
 ### AspNetCoreWebApiLab-Api
 
+It's a `ASP.NET Core Web Application` with **API template** which has the responsibility to exposes api services with three versions: v1, v2 and v3.
+
+* **Version 1 (v1):** Roles and Users services with authentication and authorization;
+* **Version 2 (v2):** All version 1 features plus asynchronous endpoints.
+* **Version 3 (v3):** All version 2 features plus sorting, pagination, filtering, data shaping, throttling and hateoas.
+
+![image info](./readme-pictures/aspnetcorewebapilab-api.jpg)
+
+The main namespaces are: `Controllers`, `Models`, `Services` and `Tools`.
+
+* [Controllers](./AspNetCoreWebApiLab.Api/Controllers): classes that represents the api endpoints.
+
+* [Models](./AspNetCoreWebApiLab.Api/Models): model classes that represents api data used on controllers.
+
+* [Services](./AspNetCoreWebApiLab.Api/Services): classes that encapsulates more complex rules used on controllers.
+
+* [Tools](./AspNetCoreWebApiLab.Api/Tools): classes that represents some utilities.
+
 ### AspNetCoreWebApiLab-ApiClient
 
+It's a `.Net Core Console Application` which has the responsibility to exemplify how to consumes the api services developed.
+
+![image info](./readme-pictures/aspnetcorewebapilab-apiclient.jpg)
+
+The main namespaces are: `DTOs` and `Services`.
+
+* [DTOs](./AspNetCoreWebApiLab.ApiClient/DTOs): classes that represents the data transfer objects of api services.
+
+* [Services](./AspNetCoreWebApiLab.ApiClient/Services): classes that encapsulates api calls.
+
 ### AspNetCoreWebApiLab-Persistence
+
+It's a `.Net Core Class Library` which has the responsibility to maintain the EF Core configurations and carry out the operations in the databases.
+
+![image info](./readme-pictures/aspnetcorewebapilab-persistence.jpg)
+
+The main namespaces are: `DataTransferObjects`, `EntityFrameworkContexts`, `Mappers` and `Migrations`.
+
+* [DataTransferObjects](./AspNetCoreWebApiLab.Persistence/DataTransferObjects): classes that represents the models that map the database tables.
+
+* [EntityFrameworkContexts](./AspNetCoreWebApiLab.Persistence/EntityFrameworkContexts): classes that configure access to databases.
+
+* [Mappers](./AspNetCoreWebApiLab.Persistence/Mappers): classes that encapsulates commands and queries applied on database.
+
+* [Migrations](./AspNetCoreWebApiLab.Persistence/Migrations): classes that represent the migrations that will be applied in database.
 
 ## Rest X Restful
 
